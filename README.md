@@ -12,8 +12,8 @@ Planned home: **jonoisart.com/tahoe-field-guide**
 |---|---|
 | `index.html` | Standalone page for static hosting. Generated, don't edit by hand |
 | `src/tahoe-field-guide.html` | Source of truth: the page as published on claude.ai (a fragment, no `<html>`/`<head>`) |
-| `img/` | 24 painted plates, scaled to 1,400 px long edge, never cropped |
-| `thumbs/` | 118 photo thumbnails (≤320 px) from Wikimedia Commons and US agencies |
+| `img/` | 25 painted plates, scaled to 1,400 px long edge, never cropped |
+| `thumbs/` | 117 photo thumbnails (plus one superseded by a plate) (≤320 px) from Wikimedia Commons and US agencies |
 | `data/thumbs-data.json` | Credit and license for every thumbnail |
 | `scripts/build_index.py` | Wraps `src/` into `index.html` |
 | `scripts/thumbs_inject.py` | Merges a thumbnail manifest into the data and the page |

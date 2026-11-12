@@ -98,8 +98,8 @@ footer {{ margin-top:auto; font-size:7.2pt; color:var(--sepia); text-align:cente
 </section>
 <section class="figs">
   <div><b>143</b><span>plants &amp; animals</span></div>
-  <div><b>24</b><span>painted plates</span></div>
-  <div><b>118</b><span>photographs</span></div>
+  <div><b>25</b><span>painted plates</span></div>
+  <div><b>117</b><span>photographs</span></div>
   <div><b>7</b><span>habitat zones</span></div>
 </section>
 <section class="bottom">
