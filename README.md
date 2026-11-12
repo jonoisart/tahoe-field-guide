@@ -1,5 +1,9 @@
 # Tahoe Basin Field Guide
 
+[![Tahoe Basin Field Guide flyer](flyer/flyer-preview.jpg)](flyer/Tahoe-Basin-Field-Guide-flyer.pdf)
+
+**[Open the guide](https://jonoisart.github.io/tahoe-field-guide/)** · **[Download the printable flyer (PDF, US Letter)](flyer/Tahoe-Basin-Field-Guide-flyer.pdf)**
+
 A searchable field guide to 143 plants and animals of Lake Tahoe and its watershed, from the lake floor (4,580 ft) to Freel Peak (10,881 ft). Each entry gives its habitat zone, status (native, endemic, protected, introduced, invasive), a short natural-history note, a Wikipedia link and an image.
 
 A one-page printable flyer with a QR code lives in `flyer/`.
