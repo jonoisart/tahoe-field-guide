@@ -1,0 +1,910 @@
+<title>Tahoe Basin Field Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: an elevation transect (lake floor to Freel Peak, drawn to vertical scale)
+   with a compact color key beneath it, then the filterable species guide. */
+:root{
+  --bg:#edf1f4; --surface:#f9fbfc; --ink:#13212c; --muted:#54646f; --line:#d2dae0;
+  --accent:#0b5fa5; --accent-ink:#ffffff;
+  --z-alpine:#c3cad0; --z-sub:#93aa90; --z-mont:#4c7855; --z-wet:#b59a3c;
+  --z-near:#63b6c9; --z-open:#2c80b6; --z-deep:#113c66; --rock:#808a91; --on-water:#ffffff;
+  --paper:#f2ead6; --paper-edge:#d8ccae; --plate-ink:#3b2e22;
+  --native-fg:#1d6642; --native-bg:#dbeee2;
+  --endemic-fg:#55399f; --endemic-bg:#e7e0f6;
+  --listed-fg:#7d5200; --listed-bg:#f5e6c2;
+  --intro-fg:#62574b; --intro-bg:#e9e3dc;
+  --invasive-fg:#9c2323; --invasive-bg:#f6dada;
+  --return-fg:#0b5fa5; --return-bg:#d8e8f6;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;
+  --body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --plate:"IM Fell English","Hoefler Text",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1620; --surface:#12212f; --ink:#e5edf3; --muted:#9bafbe; --line:#253a4c;
+    --accent:#6fb9f0; --accent-ink:#06121c;
+    --z-alpine:#aab3ba; --z-sub:#7f977c; --z-mont:#46704e; --z-wet:#a88e36;
+    --z-near:#55a6ba; --z-open:#2a76a9; --z-deep:#1b4d7f; --rock:#59646c; --on-water:#ffffff;
+    --paper:#e4d9c0; --paper-edge:#bfb190; --plate-ink:#3b2e22;
+    --native-fg:#8fd6ad; --native-bg:#173a29;
+    --endemic-fg:#c3b1f3; --endemic-bg:#2c2350;
+    --listed-fg:#f0c66e; --listed-bg:#40300b;
+    --intro-fg:#cfc3b6; --intro-bg:#35302a;
+    --invasive-fg:#f3a0a0; --invasive-bg:#471c1c;
+    --return-fg:#8cc7f3; --return-bg:#11314a;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1620; --surface:#12212f; --ink:#e5edf3; --muted:#9bafbe; --line:#253a4c;
+  --accent:#6fb9f0; --accent-ink:#06121c;
+  --z-alpine:#aab3ba; --z-sub:#7f977c; --z-mont:#46704e; --z-wet:#a88e36;
+  --z-near:#55a6ba; --z-open:#2a76a9; --z-deep:#1b4d7f; --rock:#59646c; --on-water:#ffffff;
+    --paper:#e4d9c0; --paper-edge:#bfb190; --plate-ink:#3b2e22;
+  --native-fg:#8fd6ad; --native-bg:#173a29;
+  --endemic-fg:#c3b1f3; --endemic-bg:#2c2350;
+  --listed-fg:#f0c66e; --listed-bg:#40300b;
+  --intro-fg:#cfc3b6; --intro-bg:#35302a;
+  --invasive-fg:#f3a0a0; --invasive-bg:#471c1c;
+  --return-fg:#8cc7f3; --return-bg:#11314a;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.5rem;font-weight:700}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+.lede{max-width:62ch;color:var(--muted);font-size:1.05rem}
+header{display:flex;flex-direction:column;gap:14px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;font-family:var(--mono);font-size:.82rem;color:var(--muted);padding:0;margin:0;list-style:none}
+.facts b{color:var(--ink);font-weight:500}
+
+/* transect */
+.transect{display:flex;flex-direction:column;gap:14px;max-width:440px}
+.transect svg{width:100%;height:auto;display:block}
+.transect figcaption{font-size:.8rem;color:var(--muted);margin-top:6px}
+figure{margin:0}
+.tick{font-family:var(--mono);font-size:10.5px;fill:var(--muted)}
+.lab{font-family:var(--mono);font-size:10.5px;fill:var(--ink)}
+.keyh{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.key{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px}
+.key li{display:grid;grid-template-columns:12px minmax(0,1fr);gap:8px;align-items:start;font-size:.86rem;line-height:1.25}
+.key .sw{width:12px;height:12px;border-radius:2px;margin-top:2px}
+.key .zn{font-weight:600}
+.key .zr{display:block;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.keynote{font-size:.78rem;color:var(--muted);margin-top:10px}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* controls */
+.controls{display:flex;flex-direction:column;gap:12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.row .lbl{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);width:4.2rem}
+.chip{font:inherit;font-size:.86rem;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 11px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+#q{font:inherit;flex:1 1 220px;min-width:0;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 12px}
+#count{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* species */
+#list{display:flex;flex-direction:column;gap:32px}
+.group-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.group-head span{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:10px}
+.sp{background:var(--surface);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.sp .nm{font-weight:600;font-size:1rem;line-height:1.25}
+.wl{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;text-decoration-thickness:1px}
+.wl:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.wl::after{content:"\2197";font-size:.75em;margin-left:3px;opacity:.55}
+.pp .wl,.plate .wl{text-decoration-color:var(--paper-edge)}
+.pp .wl:hover,.plate .wl:hover{color:var(--plate-ink);text-decoration-color:var(--plate-ink)}
+.sp .sci{font-style:italic;color:var(--muted);font-size:.88rem}
+.sp .note{font-size:.9rem}
+.meta{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.tag{font-size:.7rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;border-radius:3px;padding:1px 6px}
+.t-native{color:var(--native-fg);background:var(--native-bg)}
+.t-endemic{color:var(--endemic-fg);background:var(--endemic-bg)}
+.t-listed{color:var(--listed-fg);background:var(--listed-bg)}
+.t-introduced{color:var(--intro-fg);background:var(--intro-bg)}
+.t-invasive{color:var(--invasive-fg);background:var(--invasive-bg)}
+.t-returning{color:var(--return-fg);background:var(--return-bg)}
+.zs{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.empty{color:var(--muted);padding:24px 0}
+
+
+/* plates */
+.pl{filter:url(#wash)}
+.pl path,.pl circle,.pl ellipse{stroke:#3b2e22;stroke-width:.9;stroke-linejoin:round;stroke-linecap:round}
+.pl .n{stroke:none}
+.pl .l{fill:none}
+.plates{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,235px),1fr));gap:14px}
+.plate{background:var(--paper);box-shadow:inset 0 0 0 1px var(--paper-edge);border-radius:2px;padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;color:var(--plate-ink);font-family:var(--plate);text-align:center;min-width:0}
+.plate svg,.thumb svg{display:block;width:100%;height:auto;aspect-ratio:4/3}
+.plate .pn{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.plate .cn{font-size:1.1rem;line-height:1.15}
+.plate .sn{font-style:italic;font-size:.9rem;opacity:.8}
+.thumb{background:var(--paper);box-shadow:inset 0 0 0 1px var(--paper-edge);border-radius:2px;margin:-2px -4px 4px}
+.painted{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,400px),1fr));grid-auto-flow:dense;gap:16px}
+.pp{margin:0;background:var(--paper);box-shadow:inset 0 0 0 1px var(--paper-edge);border-radius:2px;padding:10px 10px 12px;display:flex;flex-direction:column;gap:8px;color:var(--plate-ink);font-family:var(--plate);text-align:center;min-width:0}
+.pp img{display:block;width:100%;height:auto;border-radius:1px}
+.pp .pn{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.pp .cn{font-size:1.1rem;line-height:1.15}
+.pp .meta{justify-content:center}
+.pp .zs{font-family:var(--mono);font-size:.7rem;opacity:.8}
+.pp .sn{font-style:italic;font-size:.9rem;opacity:.8}
+@media (min-width:900px){.pp.wide{grid-column:span 2}}
+.sp .head{display:flex;gap:12px;align-items:flex-start}
+.sp .tn{flex:0 0 72px;width:72px;height:72px;object-fit:contain;background:var(--bg);border-radius:4px}
+.sp .cr{font-size:.72rem;color:var(--muted);overflow-wrap:anywhere}
+.sp .cr a{color:inherit}
+.thumb.photo img{display:block;width:100%;max-height:300px;object-fit:contain}
+.sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+
+/* notes */
+.changes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px 32px}
+.changes p{font-size:.94rem;margin-top:6px;max-width:60ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.86rem;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+footer{font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:20px}
+footer ul{margin:0;padding-left:18px;columns:2 320px;column-gap:32px}
+footer li{break-inside:avoid;margin-bottom:4px}
+@media (max-width:760px){.row .lbl{width:100%}}
+@media (max-width:360px){.key{grid-template-columns:minmax(0,1fr)}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<filter id="wash" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="7" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G" result="d"/>
+<feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" seed="3" result="g"/>
+<feColorMatrix in="g" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 1.3" result="a"/>
+<feComposite in="d" in2="a" operator="in"/>
+</filter>
+<g id="cl"><circle r="4.2"/><circle cx="7" cy="-3" r="4"/><circle cx="2" cy="-8" r="4"/><circle cx="-6" cy="-5" r="3.8"/></g>
+<ellipse id="lf" rx="9" ry="3.5"/>
+<path id="lf-asp" d="M0,-18 C14,-17 21,-6 19,5 C16,15 6,19 0,27 C-6,19 -16,15 -19,5 C-21,-6 -14,-17 0,-18Z"/>
+
+<symbol id="p-jpine" viewBox="0 0 320 240"><g class="pl">
+<path class="l" style="stroke:#4e7c46;stroke-width:1.3" d="M60,56 l-40,50 M60,56 l-28,58 M60,56 l-14,62 M60,56 l2,64 M60,56 l-50,36 M60,56 l30,-44 M60,56 l44,-34 M60,56 l16,-50 M104,72 l-30,60 M104,72 l-16,66 M104,72 l0,68 M104,72 l14,66 M104,72 l40,-46 M104,72 l52,-34 M104,72 l26,-56 M146,88 l-22,64 M146,88 l-8,70 M146,88 l-34,56 M146,88 l44,-50 M146,88 l56,-36 M146,88 l62,-18 M146,88 l28,-60 M186,104 l60,-30 M186,104 l68,-12 M186,104 l66,12 M186,104 l56,-48 M186,104 l40,-60 M186,104 l58,30"/>
+<path class="l" style="stroke:#6e4e36;stroke-width:8" d="M16,38 C70,60 130,76 190,106"/>
+<path d="M196,108 C222,110 242,140 238,178 C234,204 212,218 194,216 C174,214 158,194 158,166 C158,134 174,108 196,108Z" fill="#a06e3e"/>
+<path class="l" d="M170,130 C190,150 216,176 232,198 M164,152 C182,170 200,190 214,212 M184,114 C204,134 226,156 238,176 M226,124 C208,146 186,172 166,190 M238,150 C220,170 200,194 184,214 M206,110 C190,128 172,146 160,160 M160,176 C170,188 180,200 190,214"/>
+</g></symbol>
+
+<symbol id="p-aspen" viewBox="0 0 320 240"><g class="pl">
+<path d="M24,0 C28,80 22,160 26,240 L84,240 C80,160 86,80 82,0Z" fill="#ece8dc"/>
+<path d="M36,70 q16,-8 30,0 q-14,6 -30,0Z" fill="#2c2a28"/><path d="M44,164 q12,-6 24,0 q-12,5 -24,0Z" fill="#2c2a28"/>
+<path class="l" d="M28,112 h18 M60,40 h20 M30,204 h14 M62,130 h18 M40,20 h12"/>
+<path class="l" style="stroke:#6e4e36;stroke-width:3" d="M82,58 C130,66 180,84 230,90 C260,94 280,106 300,120"/>
+<path class="l" d="M120,65 L128,102 M168,78 L172,134 M214,88 L212,112 M258,96 L252,142 M140,70 L104,150 M290,114 L288,150"/>
+<use href="#lf-asp" transform="translate(128,120) rotate(-8)" fill="#e9b82a" stroke="#3b2e22" stroke-width=".9"/>
+<use href="#lf-asp" transform="translate(172,152) rotate(6)" fill="#f0c83a" stroke="#3b2e22" stroke-width=".9"/>
+<use href="#lf-asp" transform="translate(212,130) rotate(-4)" fill="#dba226" stroke="#3b2e22" stroke-width=".9"/>
+<use href="#lf-asp" transform="translate(252,160) rotate(10)" fill="#b6b548" stroke="#3b2e22" stroke-width=".9"/>
+<use href="#lf-asp" transform="translate(104,168) rotate(-14)" fill="#c9bd44" stroke="#3b2e22" stroke-width=".9"/>
+<use href="#lf-asp" transform="translate(288,168) rotate(4) scale(.85)" fill="#e9b82a" stroke="#3b2e22" stroke-width=".9"/>
+<path class="l" d="M128,104 L129,144 M172,136 L171,176 M212,114 L212,154 M252,144 L250,184 M104,152 L106,192"/>
+</g></symbol>
+
+<symbol id="p-snow" viewBox="0 0 320 240"><g class="pl">
+<path class="n" d="M30,214 C100,204 230,204 294,216 C230,232 90,232 30,214Z" fill="#8a6a48" opacity=".8"/>
+<path d="M36,210 C50,190 92,188 114,206 C90,214 56,216 36,210Z" fill="#eef3f6"/>
+<path class="l" style="stroke:#a07a44;stroke-width:1.2" d="M200,214 l40,-6 M210,222 l36,4 M224,210 l30,10 M60,222 l34,4 M196,226 l-30,3 M240,204 l34,-2"/>
+<path d="M136,214 C132,150 138,92 148,62 C152,44 170,44 174,62 C184,92 190,150 186,214Z" fill="#d6342f"/>
+<ellipse cx="146" cy="118" rx="9" ry="8" fill="#bf241f"/><ellipse cx="172" cy="110" rx="9" ry="8" fill="#bf241f"/><ellipse cx="158" cy="136" rx="9" ry="8" fill="#bf241f"/><ellipse cx="180" cy="134" rx="8" ry="8" fill="#bf241f"/><ellipse cx="143" cy="152" rx="8" ry="8" fill="#bf241f"/><ellipse cx="165" cy="160" rx="9" ry="8" fill="#bf241f"/><ellipse cx="183" cy="162" rx="7" ry="8" fill="#bf241f"/><ellipse cx="150" cy="182" rx="9" ry="8" fill="#bf241f"/><ellipse cx="174" cy="188" rx="9" ry="8" fill="#bf241f"/><ellipse cx="160" cy="92" rx="8" ry="7" fill="#bf241f"/>
+<path class="l" d="M141,121 q5,4 10,0 M167,113 q5,4 10,0 M153,139 q5,4 10,0 M160,163 q5,4 10,0 M145,185 q5,4 10,0 M169,191 q5,4 10,0"/>
+<path d="M150,72 C140,76 134,86 136,98 C142,92 148,86 155,84Z" fill="#ee7268"/><path d="M172,72 C182,76 188,86 186,98 C180,92 174,86 167,84Z" fill="#ee7268"/>
+<path d="M136,128 C126,134 124,146 128,156 C132,148 136,142 142,138Z" fill="#ee7268"/><path d="M188,140 C198,146 198,158 194,168 C190,160 188,154 182,150Z" fill="#ee7268"/>
+<path d="M134,168 C124,176 124,188 128,198 C132,190 136,184 142,180Z" fill="#ee7268"/>
+<path d="M154,58 C152,48 156,42 161,40 C166,42 170,48 168,58 C164,54 158,54 154,58Z" fill="#ee7268"/>
+</g></symbol>
+
+<symbol id="p-cress" viewBox="0 0 320 240"><g class="pl">
+<path class="n" d="M20,196 C80,168 240,168 300,196 C250,228 70,228 20,196Z" fill="#e2cfa0"/>
+<path class="l" style="stroke:#b0966a;stroke-width:1.6;stroke-dasharray:0 8" d="M40,198 C100,188 220,188 284,200 M60,210 C120,218 200,218 262,208 M96,182 C140,176 190,176 230,182"/>
+<path class="l" style="stroke:#6e8f4a;stroke-width:2" d="M160,188 C130,172 100,162 70,152 M160,188 C150,162 136,138 124,114 M160,188 C166,158 176,132 190,108 M160,188 C190,174 222,162 252,150 M160,188 C120,190 90,194 58,190 M160,188 C200,192 230,196 264,190"/>
+<g fill="#7fa055" stroke="#3b2e22" stroke-width=".8">
+<use href="#lf" transform="translate(136,170) rotate(40)"/><use href="#lf" transform="translate(112,172) rotate(-20)"/><use href="#lf" transform="translate(96,154) rotate(50)"/><use href="#lf" transform="translate(146,166) rotate(-30)"/><use href="#lf" transform="translate(150,146) rotate(20)"/><use href="#lf" transform="translate(132,140) rotate(-60)"/><use href="#lf" transform="translate(172,154) rotate(30)"/><use href="#lf" transform="translate(166,134) rotate(-40)"/><use href="#lf" transform="translate(190,128) rotate(10)"/><use href="#lf" transform="translate(196,178) rotate(20)"/><use href="#lf" transform="translate(212,160) rotate(-50)"/><use href="#lf" transform="translate(234,164) rotate(30)"/><use href="#lf" transform="translate(124,196) rotate(30)"/><use href="#lf" transform="translate(94,186) rotate(-30)"/><use href="#lf" transform="translate(204,198) rotate(-25)"/><use href="#lf" transform="translate(236,188) rotate(35)"/>
+</g>
+<g fill="#f2cf2a" stroke="#3b2e22" stroke-width=".8">
+<use href="#cl" transform="translate(68,150)"/><use href="#cl" transform="translate(123,112)"/><use href="#cl" transform="translate(191,106)"/><use href="#cl" transform="translate(254,148)"/><use href="#cl" transform="translate(54,190)"/><use href="#cl" transform="translate(268,190)"/>
+</g></g></symbol>
+
+<symbol id="p-mule" viewBox="0 0 320 240"><g class="pl">
+<path class="l" style="stroke:#7e8f66;stroke-width:3" d="M160,224 C140,160 126,110 118,70 M160,224 C186,170 204,120 214,88"/>
+<g fill="#a3ad90"><ellipse cx="160" cy="156" rx="17" ry="66" transform="rotate(-54 160 224)"/><ellipse cx="160" cy="156" rx="17" ry="66" transform="rotate(54 160 224)"/><ellipse cx="160" cy="156" rx="18" ry="66" transform="rotate(-27 160 224)"/><ellipse cx="160" cy="156" rx="18" ry="66" transform="rotate(27 160 224)"/><ellipse cx="160" cy="160" rx="19" ry="62"/></g>
+<path class="l" d="M160,222 L160,100 M160,222 L128,104 M160,222 L192,104 M160,222 L104,148 M160,222 L216,148"/>
+<circle class="l" cx="118" cy="56" r="15" style="stroke:#f0c21e;stroke-width:17;stroke-dasharray:5.6 2.25;stroke-linecap:butt"/><circle cx="118" cy="56" r="7.5" fill="#b8791e"/>
+<circle class="l" cx="216" cy="76" r="13" style="stroke:#f0c21e;stroke-width:15;stroke-dasharray:4.8 2;stroke-linecap:butt"/><circle cx="216" cy="76" r="6.5" fill="#b8791e"/>
+</g></symbol>
+
+<symbol id="p-lupine" viewBox="0 0 320 240"><g class="pl">
+<path class="l" style="stroke:#5c8a4a;stroke-width:2" d="M160,232 C140,210 126,190 122,170 M160,232 C180,214 196,200 200,180 M160,232 C120,222 96,212 84,200 M160,232 C200,226 230,216 246,204 M160,232 C150,218 146,208 150,196"/>
+<circle class="l" cx="82" cy="196" r="11" style="stroke:#6a9a54;stroke-width:18;stroke-dasharray:4 4.64;stroke-linecap:butt"/>
+<circle class="l" cx="248" cy="200" r="11" style="stroke:#6a9a54;stroke-width:18;stroke-dasharray:4 4.64;stroke-linecap:butt"/>
+<circle class="l" cx="152" cy="192" r="9" style="stroke:#6a9a54;stroke-width:15;stroke-dasharray:3.4 3.67;stroke-linecap:butt"/>
+<path class="l" style="stroke:#8a84dc;stroke-width:8;stroke-dasharray:0 9" d="M112,168 L116,66 M132,168 L128,66"/>
+<path class="l" style="stroke:#5a53b8;stroke-width:10;stroke-dasharray:0 9" d="M122,172 L122,62"/>
+<path class="l" style="stroke:#b9b4ee;stroke-width:6;stroke-dasharray:0 7" d="M122,56 L122,30"/>
+<path class="l" style="stroke:#8a84dc;stroke-width:8;stroke-dasharray:0 9" d="M191,178 L195,96 M209,178 L205,96"/>
+<path class="l" style="stroke:#5a53b8;stroke-width:10;stroke-dasharray:0 9" d="M200,182 L200,92"/>
+<path class="l" style="stroke:#b9b4ee;stroke-width:6;stroke-dasharray:0 7" d="M200,86 L200,62"/>
+</g></symbol>
+
+<symbol id="p-colum" viewBox="0 0 320 240"><g class="pl">
+<path class="l" style="stroke:#6a8a4a;stroke-width:2" d="M226,236 C236,160 224,74 174,58 C160,54 158,80 160,112 M231,190 C244,186 252,184 262,186"/>
+<g fill="#7fa055"><circle cx="262" cy="178" r="10"/><circle cx="276" cy="190" r="10"/><circle cx="260" cy="198" r="10"/></g>
+<path class="l" style="stroke:#d93a2b;stroke-width:6" d="M150,116 C144,96 136,80 126,64 M170,116 C176,96 184,80 194,64 M142,120 C128,106 114,96 98,88 M178,120 C192,106 206,96 222,88"/>
+<g fill="#d93a2b"><circle cx="126" cy="62" r="4.5"/><circle cx="194" cy="62" r="4.5"/><circle cx="97" cy="87" r="4.5"/><circle cx="223" cy="87" r="4.5"/></g>
+<g fill="#de4030"><ellipse cx="160" cy="148" rx="9" ry="25" transform="rotate(-100 160 122)"/><ellipse cx="160" cy="148" rx="9" ry="25" transform="rotate(100 160 122)"/><ellipse cx="160" cy="148" rx="9" ry="25" transform="rotate(-50 160 122)"/><ellipse cx="160" cy="148" rx="9" ry="25" transform="rotate(50 160 122)"/><ellipse cx="160" cy="148" rx="9" ry="25"/></g>
+<path d="M145,122 C145,140 152,150 160,150 C168,150 175,140 175,122Z" fill="#f2cf2a"/>
+<path class="l" style="stroke:#b8901a;stroke-width:1.2" d="M154,148 L149,176 M158,150 L156,182 M162,150 L164,182 M166,148 L172,176"/>
+<g fill="#f2cf2a"><circle cx="149" cy="177" r="2.4"/><circle cx="156" cy="183" r="2.4"/><circle cx="164" cy="183" r="2.4"/><circle cx="172" cy="177" r="2.4"/></g>
+</g></symbol>
+
+<symbol id="p-bear" viewBox="0 0 320 240"><g class="pl">
+<path class="n" d="M26,202 C100,194 220,196 298,204 C230,216 90,218 26,202Z" fill="#b9b08a" opacity=".75"/>
+<path class="l" style="stroke:#6a8a4a;stroke-width:1.3" d="M40,204 l-4,-16 M46,204 l2,-18 M52,205 l8,-14 M284,206 l-6,-16 M290,206 l2,-18 M190,208 l-3,-12 M196,208 l4,-12"/>
+<path d="M232,158 L226,202 L206,202 L212,160Z" fill="#452b1a"/><path d="M138,158 L134,202 L112,200 L118,156Z" fill="#452b1a"/>
+<circle cx="99" cy="90" r="8" fill="#5c3b25"/>
+<path d="M60,118 C58,108 70,98 84,96 C92,90 100,88 108,92 C130,84 170,74 210,80 C250,84 276,104 278,134 C280,150 274,170 270,200 L248,200 C250,182 246,168 236,160 C210,170 170,170 150,162 C150,176 148,188 146,202 L122,202 C124,182 120,162 112,148 C100,144 84,140 72,134 C64,132 58,126 60,118Z" fill="#5c3b25"/>
+<path d="M60,118 C62,111 70,107 79,110 C81,120 77,129 72,134 C64,132 58,126 60,118Z" fill="#b88a5a"/>
+<path class="l" d="M130,98 q6,8 2,16 M170,90 q6,10 2,20 M210,96 q6,10 2,20 M246,112 q4,10 0,20 M190,152 q8,4 16,0 M96,112 q6,8 4,16"/>
+</g><ellipse cx="61.5" cy="118" rx="3.6" ry="2.6" fill="#141110"/><circle cx="84" cy="108" r="2" fill="#141110"/></symbol>
+
+<symbol id="p-marten" viewBox="0 0 320 240"><g class="pl">
+<path d="M26,184 C100,180 230,180 298,186 L298,208 C230,204 100,204 26,210Z" fill="#8a6a4c"/>
+<path class="l" d="M40,192 h40 M110,198 h50 M190,190 h44 M250,200 h36"/>
+<path class="n" d="M60,184 q14,-8 28,0Z M230,184 q16,-8 30,0Z" fill="#7a9a52"/>
+<path d="M80,101 L85,85 L96,99Z" fill="#6a452a"/>
+<path d="M52,116 C56,104 68,98 80,100 C110,96 140,104 170,104 C200,104 222,110 236,122 C262,116 292,110 306,124 C298,142 262,144 240,146 C236,160 234,172 236,184 L220,184 C218,170 214,160 208,152 C180,156 150,154 124,148 C122,162 122,172 124,184 L108,184 C106,166 102,150 96,138 C84,136 66,130 56,124Z" fill="#7a5232"/>
+<path d="M68,126 C80,130 92,134 99,139 C97,128 89,120 78,118Z" fill="#e2aa62"/>
+<path class="l" d="M250,124 q14,-2 26,0 M252,134 q14,2 26,0 M150,110 q8,4 16,0 M190,112 q8,4 16,0 M56,122 l-14,-2 M56,124 l-12,6"/>
+</g><circle cx="70" cy="110" r="2.2" fill="#141110"/><circle cx="53" cy="117" r="2.4" fill="#141110"/></symbol>
+
+<symbol id="p-pika" viewBox="0 0 320 240"><g class="pl">
+<path d="M40,216 L70,172 L150,166 L250,172 L290,212 L270,234 L60,234Z" fill="#aaaaa5"/>
+<path class="l" d="M70,172 L96,234 M250,172 L224,234 M150,166 L160,200"/>
+<path class="l" style="stroke:#c9a23a;stroke-width:5;stroke-dasharray:0 13" d="M66,206 C110,196 150,222 204,210 M230,196 l30,10"/>
+<path class="l" style="stroke:#5a8a48;stroke-width:1.5" d="M108,146 C90,140 76,128 64,112 M100,143 C88,146 74,146 58,140 M98,141 C92,126 90,116 84,102"/>
+<g fill="#f2cf2a"><circle cx="63" cy="110" r="4.5"/><circle cx="84" cy="100" r="4.5"/></g><circle cx="56" cy="140" r="4.5" fill="#8a70c8"/>
+<circle cx="146" cy="102" r="14" fill="#8f6f4c"/><circle class="n" cx="146" cy="102" r="8" fill="#cba780"/>
+<path d="M108,150 C102,118 130,92 170,92 C210,92 238,116 236,150 C234,166 222,172 202,172 L130,172 C116,170 110,162 108,150Z" fill="#a98660"/>
+<path class="n" d="M114,160 C140,170 190,170 224,162 C214,172 190,172 170,172 L130,172 C122,170 116,166 114,160Z" fill="#d8bf98"/>
+<ellipse cx="138" cy="173" rx="11" ry="4" fill="#8f6f4c"/><ellipse cx="204" cy="173" rx="15" ry="4.5" fill="#8f6f4c"/>
+<path class="l" d="M110,144 l-22,-6 M110,147 l-24,3 M110,149 l-20,11 M170,100 q10,6 14,16 M196,104 q10,8 12,18"/>
+</g><circle cx="127" cy="124" r="4" fill="#141110"/><circle cx="128.2" cy="122.8" r="1.1" fill="#fff"/><ellipse cx="107.5" cy="140" rx="2.6" ry="2" fill="#3a2a22"/></symbol>
+
+<symbol id="p-eagle" viewBox="0 0 320 240"><g class="pl">
+<path d="M144,240 L152,184 L202,184 L212,240Z" fill="#8d8377"/>
+<path class="l" d="M164,190 L160,240 M184,192 L190,240 M174,200 l2,30"/>
+<path d="M150,176 L158,218 L198,218 L204,180Z" fill="#f3efe4"/>
+<path d="M150,70 C130,92 122,142 140,180 L204,184 C226,150 224,100 198,72Z" fill="#4c3525"/>
+<path d="M172,86 C204,98 218,142 210,184 L178,182 C170,150 166,112 172,86Z" fill="#392719"/>
+<path class="l" d="M148,102 q8,6 16,0 M144,122 q8,6 16,0 M146,142 q8,6 16,0 M150,160 q8,6 16,0 M184,112 q7,6 14,0 M188,132 q7,6 14,0 M190,152 q7,6 14,0 M188,170 q7,5 14,0"/>
+<path d="M132,54 C136,30 164,22 186,34 C200,44 204,62 198,80 C182,90 160,88 146,78Z" fill="#f6f2e8"/>
+<path d="M134,48 C120,47 108,54 106,65 C106,72 111,75 115,70 C117,64 124,63 135,63Z" fill="#e8b92e"/>
+<path class="l" d="M138,44 C146,39 155,41 160,46 M150,80 q6,8 4,14 M166,84 q6,8 4,14 M182,84 q4,8 2,12"/>
+<path d="M154,182 l-5,11 l8,-3 l2,8 l6,-9 l8,3 l-4,-10Z" fill="#e8b92e"/><path d="M182,184 l-5,11 l8,-3 l2,8 l6,-9 l8,3 l-4,-10Z" fill="#e8b92e"/>
+</g><circle cx="149" cy="50" r="3.4" fill="#e8c84a" stroke="#3b2e22" stroke-width=".7"/><circle cx="149" cy="50" r="1.7" fill="#141110"/></symbol>
+
+<symbol id="p-jay" viewBox="0 0 320 240"><g class="pl">
+<path d="M16,200 C90,188 200,192 304,172 L304,181 C200,202 96,198 16,210Z" fill="#7b5a3d"/>
+<path class="l" style="stroke:#4d7a3a;stroke-width:1.4" d="M262,180 l26,-36 M262,180 l36,-24 M262,180 l14,-42 M262,180 l40,-8 M246,184 l10,-40 M246,184 l-6,-38 M40,198 l-14,-34 M40,198 l2,-38 M40,198 l16,-32"/>
+<path d="M194,148 L268,214 L255,224 L182,168Z" fill="#2f62ad"/>
+<path d="M118,100 C138,86 184,92 202,122 C216,146 208,172 180,178 C150,182 126,166 118,140Z" fill="#3d7cc8"/>
+<path d="M144,108 C172,104 200,124 216,160 C196,168 168,160 150,144Z" fill="#2a569e"/>
+<path class="l" d="M160,120 l12,-5 M168,130 l14,-5 M178,140 l14,-5 M188,150 l13,-4 M206,166 l12,-8 M220,178 l12,-8 M234,190 l12,-8 M248,203 l11,-8"/>
+<path d="M90,94 C93,76 106,68 118,66 L136,28 C139,48 143,62 147,76 C157,96 153,116 138,126 C123,134 107,126 101,110Z" fill="#2c2f38"/>
+<path d="M91,91 L70,97 L93,102Z" fill="#1c1c1f"/>
+<path class="l" style="stroke:#9cc8f2;stroke-width:1.4" d="M101,79 l3,-9 M107,77 l2,-8"/>
+<path class="l" d="M160,178 L158,193 L149,196 M158,193 L166,197 M174,177 L173,192 L165,196 M173,192 L181,195"/>
+</g><circle cx="108" cy="86" r="3" fill="#0d0d0f" stroke="#6a7080" stroke-width=".6"/><circle cx="109" cy="85" r=".9" fill="#fff"/></symbol>
+
+<symbol id="p-chick" viewBox="0 0 320 240"><g class="pl">
+<path class="l" style="stroke:#7b5a3d;stroke-width:5" d="M24,196 C110,186 210,194 300,182"/>
+<path class="l" style="stroke:#3f6b45;stroke-width:1.6" d="M52,193 l-8,-22 M64,192 l-6,-24 M76,191 l-4,-24 M88,190 l-2,-24 M52,194 l-6,20 M64,193 l-4,22 M76,192 l-2,22 M250,188 l4,-24 M262,187 l6,-22 M274,186 l8,-22 M286,185 l8,-20 M250,189 l2,22 M262,188 l4,22 M274,187 l5,20"/>
+<path d="M118,136 L50,170 L56,182 L126,154Z" fill="#70767b"/>
+<path d="M116,124 C120,94 168,82 200,102 C220,116 216,154 192,168 C160,182 122,168 116,124Z" fill="#9ea4a8"/>
+<path class="n" d="M136,150 C156,168 188,168 206,146 C208,162 192,174 168,175 C150,175 138,164 136,150Z" fill="#dcc9a6"/>
+<path d="M124,118 C148,106 178,116 190,142 C168,152 140,148 124,118Z" fill="#7d848a"/>
+<path class="l" d="M140,124 C156,122 170,130 180,142 M134,130 C150,134 162,140 172,146"/>
+<circle cx="206" cy="98" r="25" fill="#f4f0e6"/>
+<path d="M182,94 C183,76 198,69 212,72 C225,75 232,86 231,95Z" fill="#1e1e21"/>
+<path class="l" style="stroke:#f4f0e6;stroke-width:3" d="M190,84 C202,78 216,80 228,89"/>
+<path d="M203,113 C212,109 224,108 230,101 C233,113 225,126 210,126 C201,124 199,118 203,113Z" fill="#1e1e21"/>
+<path d="M230,94 L243,98 L230,102Z" fill="#26262a"/>
+<path class="l" d="M166,172 L165,188 L157,192 M165,188 L173,192 M180,170 L180,187 L172,191 M180,187 L188,190"/>
+</g><circle cx="214" cy="91" r="2.6" fill="#0d0d0f" stroke="#8a8a8a" stroke-width=".6"/></symbol>
+
+<symbol id="p-nut" viewBox="0 0 320 240"><g class="pl">
+<path d="M16,198 C100,190 210,196 304,184 L304,193 C210,206 100,200 16,208Z" fill="#8a7a6a"/>
+<path class="l" style="stroke:#4d7a4a;stroke-width:1.5" d="M44,198 l-12,-26 M44,198 l-2,-30 M44,198 l8,-28 M44,198 l-20,-18 M44,198 l18,-22 M288,188 l-6,-28 M288,188 l6,-28 M288,188 l16,-22 M288,188 l-16,-22"/>
+<ellipse cx="258" cy="172" rx="13" ry="18" fill="#6b4a5a"/>
+<path class="l" d="M248,162 q10,6 20,0 M246,172 q12,6 24,0 M248,182 q10,6 20,0"/>
+<path d="M118,140 L52,172 L58,184 L126,158Z" fill="#222226"/><path class="n" d="M55,178 L58,184 L126,158 L125,153Z" fill="#f4f0e6"/>
+<path d="M114,126 C120,94 166,84 200,104 C220,118 216,154 192,168 C160,180 120,168 114,126Z" fill="#bdbab2"/>
+<path d="M122,118 C148,106 180,116 194,146 C170,156 142,150 122,118Z" fill="#222226"/><path class="n" d="M164,144 L190,144 L188,151 L170,152Z" fill="#f4f0e6"/>
+<circle cx="206" cy="98" r="23" fill="#c4c1b9"/>
+<path d="M226,91 L258,98 L226,104Z" fill="#222226"/>
+<path class="l" d="M166,170 L165,186 L157,190 M165,186 L173,190 M180,168 L180,185 L172,189 M180,185 L188,188"/>
+</g><circle cx="213" cy="93" r="2.8" fill="#0d0d0f"/><circle cx="213.8" cy="92.2" r=".8" fill="#fff"/></symbol>
+
+<symbol id="p-wood" viewBox="0 0 320 240"><g class="pl">
+<path d="M198,0 C202,80 194,160 200,240 L266,240 C260,160 268,80 262,0Z" fill="#b97c4c"/>
+<path class="l" d="M216,10 C212,50 220,80 214,120 M238,0 C242,40 234,90 240,130 M224,130 C228,170 220,200 226,240 M248,120 C244,160 252,200 248,240 M206,60 C210,90 206,110 208,150 M254,20 C250,50 256,70 252,100"/>
+<path d="M142,168 L150,220 L164,218 L166,176Z" fill="#1d1d20"/>
+<path d="M152,70 C134,84 122,122 130,160 C136,182 152,188 166,178 C182,152 188,112 178,82Z" fill="#1d1d20"/>
+<path class="n" d="M140,118 L147,154 L155,152 L149,116Z" fill="#f4f0e6"/>
+<circle cx="170" cy="60" r="21" fill="#f4f0e6"/>
+<path d="M150,54 C151,45 157,40 165,39 C160,47 158,56 158,64Z" fill="#c8322a"/>
+<path d="M189,55 L208,60 L189,65Z" fill="#3a3a3e"/>
+<path class="l" d="M176,122 L199,116 M178,142 L200,140 M196,112 l4,4 l-4,4 M197,136 l4,4 l-4,4"/>
+</g><circle cx="178" cy="57" r="2.6" fill="#0d0d0f"/><circle cx="178.8" cy="56.2" r=".8" fill="#fff"/></symbol>
+
+<symbol id="p-tan" viewBox="0 0 320 240"><g class="pl">
+<path d="M16,194 C100,198 210,188 304,198 L304,206 C210,198 100,208 16,204Z" fill="#7b5a3d"/>
+<ellipse cx="56" cy="184" rx="22" ry="8" transform="rotate(-25 56 184)" fill="#6f9a52"/><ellipse cx="276" cy="186" rx="22" ry="8" transform="rotate(20 276 186)" fill="#6f9a52"/><ellipse cx="86" cy="212" rx="20" ry="7" transform="rotate(15 86 212)" fill="#7fa85c"/>
+<path d="M200,150 L264,202 L252,212 L190,168Z" fill="#26231f"/>
+<path d="M112,106 C132,88 182,92 204,120 C218,144 208,170 180,176 C150,180 122,162 114,136Z" fill="#f1c822"/>
+<path d="M146,106 C176,102 206,124 218,162 C196,168 166,160 150,142Z" fill="#26231f"/>
+<path class="l" style="stroke:#f1c822;stroke-width:3.5" d="M156,119 l18,-4"/><path class="l" style="stroke:#f4efe0;stroke-width:2.5" d="M164,133 l20,-4"/>
+<circle cx="112" cy="94" r="24" fill="#e4571f"/>
+<path class="n" d="M100,112 C112,120 128,116 137,104 C135,120 121,129 106,123Z" fill="#f0a020"/>
+<path d="M91,89 L71,96 L92,101Z" fill="#dcc09a"/>
+<path class="l" d="M160,176 L158,191 L149,194 M158,191 L166,195 M174,175 L173,190 L165,194 M173,190 L181,193"/>
+</g><circle cx="103" cy="90" r="2.8" fill="#0d0d0f"/><circle cx="103.9" cy="89.1" r=".8" fill="#fff"/></symbol>
+
+<symbol id="p-blue" viewBox="0 0 320 240"><g class="pl">
+<path d="M144,240 C150,214 142,198 148,182 L158,172 L168,180 L184,172 C190,198 184,216 190,240Z" fill="#9a8f82"/>
+<path class="l" d="M156,188 C152,206 158,220 154,240 M172,186 C176,204 170,222 176,240"/>
+<path d="M114,148 L50,178 L54,186 L122,162Z" fill="#3577ba"/>
+<path d="M110,128 C116,98 160,86 196,104 C216,116 216,150 192,164 C162,176 118,166 110,128Z" fill="#62b0ea"/>
+<path class="n" d="M140,156 C160,166 186,164 204,146 C200,160 186,170 166,170 C152,170 144,164 140,156Z" fill="#d3e7f5"/>
+<path d="M118,118 C144,106 178,116 196,144 C170,154 130,158 84,168 C100,152 110,134 118,118Z" fill="#3f8bd0"/>
+<path class="l" d="M134,124 C152,122 170,130 182,142 M120,140 C110,150 100,158 90,164"/>
+<circle cx="204" cy="98" r="22" fill="#62b0ea"/>
+<path d="M224,94 L240,98 L224,102Z" fill="#222"/>
+<path class="l" d="M160,168 L160,178 M172,167 L173,177"/>
+</g><circle cx="211" cy="93" r="2.8" fill="#0d0d0f"/><circle cx="211.8" cy="92.2" r=".8" fill="#fff"/></symbol>
+
+<symbol id="p-lct" viewBox="0 0 320 240"><g class="pl">
+<path d="M146,90 C154,72 168,64 182,68 C184,78 188,88 192,97Z" fill="#8a9458"/><path d="M236,106 l6,-10 l7,12Z" fill="#8a9458"/>
+<path d="M86,140 L102,162 L112,141Z" fill="#dba274"/><path d="M160,154 L172,174 L188,152Z" fill="#dba274"/><path d="M214,148 L228,166 L242,144Z" fill="#dba274"/>
+<path d="M40,120 C70,92 140,84 210,98 C240,104 262,112 276,118 L302,96 C298,114 298,132 304,150 L276,128 C250,140 220,150 180,154 C130,158 76,150 40,120Z" fill="#eadab6"/>
+<path class="n" d="M40,120 C70,92 140,84 210,98 C240,104 262,112 276,118 L302,96 C299,106 298,114 298,122 C240,120 200,116 150,114 C110,112 70,114 40,120Z" fill="#7a8a50"/>
+<path class="l" style="stroke:#d98a84;stroke-width:9;opacity:.65" d="M92,126 C140,120 210,122 270,123"/>
+<path class="l" style="stroke:#2a2620;stroke-width:3.2;stroke-dasharray:0 9" d="M150,100 C190,98 230,106 268,116 M170,109 C200,108 240,112 292,110 M190,119 C220,118 250,122 296,128 M204,129 C230,131 250,131 274,129 M108,101 C124,98 136,96 146,96 M288,102 l8,-4 M152,74 l28,6"/>
+<path class="l" d="M84,103 C93,116 93,132 84,146 M40,120 L66,127 M284,112 l14,-10 M286,122 l12,2 M284,130 l14,12"/>
+<path class="l" style="stroke:#c9281e;stroke-width:3" d="M58,135 C66,141 76,143 84,141"/>
+</g><circle cx="64" cy="115" r="4.4" fill="#d9b84a" stroke="#3b2e22" stroke-width=".7"/><circle cx="64" cy="115" r="2.4" fill="#141110"/></symbol>
+
+<symbol id="p-kok" viewBox="0 0 320 240"><g class="pl">
+<path d="M148,85 C156,68 170,60 184,64 C186,74 190,84 194,93Z" fill="#7a6a4a"/><path d="M238,106 l6,-10 l7,12Z" fill="#7a6a4a"/>
+<path d="M92,146 L106,166 L116,146Z" fill="#7a6a4a"/><path d="M160,158 L172,178 L188,156Z" fill="#7a6a4a"/><path d="M214,152 L228,170 L242,148Z" fill="#7a6a4a"/>
+<path d="M38,126 C50,110 70,106 84,102 C120,76 180,78 230,100 C250,108 266,114 276,118 L304,98 C299,114 299,134 306,150 L276,128 C240,148 190,160 140,158 C100,156 60,146 38,126Z" fill="#d5382d"/>
+<path class="n" d="M276,118 L304,98 C299,114 299,134 306,150 L276,128Z" fill="#8a7a50"/>
+<path class="n" d="M84,102 C120,76 180,78 230,100 C200,94 130,92 84,102Z" fill="#a82a22"/>
+<path d="M38,126 C50,110 70,106 84,102 C93,118 93,138 85,151 C64,145 48,137 38,126Z" fill="#70894a"/>
+<path d="M39,125 C31,126 30,134 37,137 C40,134 41,129 39,125Z" fill="#70894a"/>
+<path class="l" d="M38,128 C48,126 58,130 68,137 M42,134 C48,139 56,141 64,141 M284,112 l16,-10 M286,122 l14,2 M284,130 l16,14 M130,104 q8,10 4,22 M170,100 q8,12 4,26 M210,106 q6,10 2,20"/>
+</g><circle cx="64" cy="117" r="4.2" fill="#e6dca0" stroke="#3b2e22" stroke-width=".7"/><circle cx="64" cy="117" r="2.3" fill="#141110"/></symbol>
+
+<symbol id="p-mack" viewBox="0 0 320 240"><g class="pl">
+<path d="M148,93 C156,76 168,68 182,72 C184,82 188,92 192,101Z" fill="#66756c"/><path d="M236,108 l6,-9 l7,11Z" fill="#66756c"/>
+<path d="M84,140 L100,162 L110,141Z" fill="#b88a5a"/><path d="M160,154 L172,174 L188,152Z" fill="#b88a5a"/><path d="M214,148 L228,166 L242,144Z" fill="#b88a5a"/>
+<path d="M34,122 C64,96 140,88 214,102 C240,108 262,114 274,118 L308,88 L290,123 L310,158 L274,128 C250,140 220,150 180,154 C128,158 72,150 34,122Z" fill="#d2cfb8"/>
+<path class="n" d="M34,122 C64,96 140,88 214,102 C240,108 262,114 274,118 L308,88 L290,123 C240,130 200,130 150,132 C110,132 70,130 34,122Z" fill="#5d6e66"/>
+<path class="l" style="stroke:#e6e1c6;stroke-width:4;stroke-dasharray:0 10" d="M70,112 C110,100 170,98 230,112 M96,122 C140,114 200,116 262,122 M120,104 C150,98 190,100 216,108 M240,118 l40,-14 M156,82 l26,6"/>
+<path class="l" d="M80,104 C89,117 89,132 80,146 M34,122 L62,128 M286,114 l14,-14 M290,123 l10,0 M286,132 l14,16"/>
+<path class="l" style="stroke:#f4f0e6;stroke-width:2" d="M160,154 L172,174 M214,148 L228,166"/>
+</g><circle cx="58" cy="116" r="4.2" fill="#d6cfa4" stroke="#3b2e22" stroke-width=".7"/><circle cx="58" cy="116" r="2.3" fill="#141110"/></symbol>
+
+<symbol id="p-frog" viewBox="0 0 320 240"><g class="pl">
+<path class="l" style="stroke:#7fa9c4;stroke-width:1.5" d="M16,220 q14,-6 28,0 t28,0 M236,224 q14,-6 28,0 t28,0 M110,230 q14,-6 28,0 t28,0 t28,0"/>
+<path d="M46,208 C66,180 130,174 200,176 C254,178 284,190 290,208 C230,218 110,218 46,208Z" fill="#a9a9a2"/>
+<path d="M222,180 C242,180 262,186 276,192 L274,199 C256,194 238,192 222,192Z" fill="#8c8250"/>
+<path d="M70,150 C74,128 96,112 124,110 C160,104 200,118 226,142 C236,156 234,170 222,180 L92,182 C76,174 68,162 70,150Z" fill="#7d764a"/>
+<path class="n" d="M78,164 C110,176 150,178 190,174 L186,183 L94,183 C86,178 81,172 78,164Z" fill="#ead05a"/>
+<path class="l" style="stroke:#3f3a26;stroke-width:6;stroke-dasharray:0 15" d="M112,124 C150,116 190,126 214,144 M132,142 C150,138 162,142 168,148"/>
+<path d="M168,142 C200,128 238,142 246,166 C248,180 238,187 224,185 C200,189 176,183 166,170Z" fill="#8c8250"/>
+<path class="n" d="M174,172 C196,183 222,185 242,176 C236,187 200,190 180,183Z" fill="#ead05a"/>
+<path class="l" style="stroke:#3f3a26;stroke-width:5;stroke-dasharray:0 13" d="M184,150 C204,144 226,152 236,166"/>
+<path d="M114,160 C112,174 108,186 98,196 L124,196 C126,186 127,174 129,163Z" fill="#8c8250"/>
+<path class="l" d="M98,196 l-8,4 M106,196 l-2,6 M116,196 l4,6"/>
+<circle cx="98" cy="120" r="10" fill="#b79a3c"/>
+<path class="l" d="M70,151 C86,155 102,153 116,145"/><circle class="l" cx="124" cy="136" r="6"/>
+</g><ellipse cx="98" cy="120" rx="5.4" ry="3.4" fill="#111"/></symbol>
+
+<symbol id="p-liz" viewBox="0 0 320 240"><g class="pl">
+<path class="n" d="M24,70 C90,30 240,40 300,110 C312,170 250,222 150,216 C60,212 10,150 24,70Z" fill="#b8b6ae" opacity=".75"/>
+<path class="l" style="stroke:#c9a23a;stroke-width:5;stroke-dasharray:0 14" d="M220,70 C250,84 270,100 280,130"/>
+<path class="l" style="stroke:#7a6f5c;stroke-width:6" d="M98,86 L86,64 L70,58 M106,112 L98,136 L82,142 M166,112 L190,96 L206,100 M156,138 L148,162 L160,176"/>
+<path class="l" d="M70,58 l-10,-6 M70,58 l-12,2 M70,58 l-6,8 M82,142 l-12,-2 M82,142 l-10,8 M82,142 l-2,10 M206,100 l10,-8 M206,100 l12,2 M206,100 l8,8 M160,176 l10,6 M160,176 l2,12 M160,176 l-8,8"/>
+<path d="M50,92 C52,80 68,75 82,83 C100,81 130,84 150,96 C170,108 176,124 186,134 C210,152 248,170 292,200 C246,184 204,170 174,152 C160,148 140,141 122,129 C104,121 88,113 76,107 C62,109 50,102 50,92Z" fill="#7a6f5c"/>
+<path class="l" style="stroke:#342e26;stroke-width:3.4;stroke-dasharray:1 8" d="M86,89 C110,89 136,96 154,110 C172,126 196,142 232,162 M84,100 C106,104 126,112 144,124 C164,138 190,150 216,162"/>
+<path class="n" d="M90,94 C112,96 134,104 150,116 C166,130 190,144 214,156" fill="none" style="stroke:#a59a82;stroke-width:2"/>
+</g><circle cx="62" cy="86" r="2.2" fill="#111"/><circle cx="60" cy="98" r="2.2" fill="#111"/></symbol>
+
+<symbol id="p-cray" viewBox="0 0 320 240"><g class="pl">
+<path class="l" d="M100,114 C70,100 40,104 12,122 M100,126 C74,138 48,140 16,134"/>
+<path class="l" style="stroke:#7a5a3a;stroke-width:3" d="M130,98 L118,72 L102,64 M146,96 L140,68 L126,56 M162,98 L166,70 L158,54 M130,142 L118,168 L102,176 M146,144 L140,172 L126,184 M162,142 L166,170 L158,186"/>
+<path class="l" style="stroke:#8a5a3a;stroke-width:7" d="M114,106 L92,86 M114,134 L92,154"/>
+<path d="M96,88 C84,62 54,50 28,60 C46,62 58,68 64,76 C50,76 38,82 30,92 C56,96 80,96 96,88Z" fill="#9a5a36"/>
+<path d="M96,152 C84,178 54,190 28,180 C46,178 58,172 64,164 C50,164 38,158 30,148 C56,144 80,144 96,152Z" fill="#9a5a36"/>
+<circle cx="70" cy="78" r="4.2" fill="#e8f4f0"/><circle cx="70" cy="162" r="4.2" fill="#e8f4f0"/>
+<path d="M258,120 L294,90 C304,104 304,136 294,150Z" fill="#8a6844"/><path class="l" d="M262,120 L298,106 M262,120 L300,120 M262,120 L298,134"/>
+<ellipse cx="254" cy="120" rx="9" ry="13" fill="#86643f"/><ellipse cx="242" cy="120" rx="10" ry="15" fill="#86643f"/><ellipse cx="228" cy="120" rx="11" ry="17" fill="#86643f"/><ellipse cx="212" cy="120" rx="12" ry="19" fill="#86643f"/><ellipse cx="194" cy="120" rx="14" ry="21" fill="#86643f"/>
+<path d="M104,111 L80,120 L104,129Z" fill="#7d5c3c"/>
+<ellipse cx="142" cy="120" rx="44" ry="25" fill="#7d5c3c"/>
+<path class="l" d="M152,96 C144,112 144,128 152,144 M120,112 q10,8 0,16"/>
+</g><circle cx="107" cy="109" r="2.6" fill="#111"/><circle cx="107" cy="131" r="2.6" fill="#111"/></symbol>
+
+<symbol id="p-mysis" viewBox="0 0 320 240"><g class="pl">
+<ellipse class="n" cx="160" cy="122" rx="136" ry="86" fill="#9fc3d8" opacity=".5"/>
+<path class="l" d="M68,104 C50,110 30,104 12,86 M70,108 C54,124 36,132 14,132 M72,100 C60,80 44,66 22,58"/>
+<path class="l" d="M92,122 l-8,28 M102,123 l-6,30 M112,123 l-4,30 M122,122 l-2,30 M132,122 l0,30 M142,122 l2,28 M160,123 l0,13 M180,125 l-2,13 M200,130 l-3,13 M218,138 l-4,12"/>
+<path d="M70,104 C74,90 96,84 120,88 C160,92 200,100 232,120 C250,132 262,148 270,166 C258,160 248,154 240,150 C216,132 180,124 150,122 C120,122 96,124 80,120 C72,116 68,110 70,104Z" fill="#eef2f0"/>
+<path class="l" style="stroke:#c98a4a;stroke-width:2" d="M100,102 C150,102 210,112 250,148"/>
+<path class="l" d="M124,89 L120,122 M150,93 L148,122 M176,98 L172,124 M200,106 L194,128 M222,116 L214,136 M240,128 L232,146"/>
+<path d="M270,166 L296,168 L290,186 L274,178Z" fill="#eef2f0"/><path class="l" d="M272,168 l18,10"/>
+<circle cx="66" cy="97" r="7" fill="#17171a"/><circle cx="76" cy="87" r="6" fill="#17171a"/>
+</g></symbol>
+</defs></svg>
+
+<div class="wrap">
+<header>
+  <h1>Tahoe Basin Field Guide</h1>
+  <p class="lede">Plants and animals of Lake Tahoe and its watershed, from the lake floor to the summit of Freel Peak. Each entry says where it lives, whether it belongs here, and what to know about it.</p>
+  <ul class="facts">
+    <li><b>6,225 ft</b> lake surface</li>
+    <li><b>1,645 ft</b> max depth</li>
+    <li><b>191 sq mi</b> of water</li>
+    <li><b>72 mi</b> of shoreline</li>
+    <li><b>63</b> tributaries, <b>1</b> outlet (Truckee River)</li>
+    <li><b>10,881 ft</b> Freel Peak, the basin's high point</li>
+  </ul>
+</header>
+
+<section class="transect" aria-label="Elevation zones">
+  <figure>
+    <svg id="tsvg" viewBox="0 0 380 450" role="img" aria-label="Cross section of the Tahoe Basin from the lake floor at 4,580 feet to Freel Peak at 10,881 feet, with habitat zones as colored bands">
+      <defs>
+        <clipPath id="land"><path d="M58,250 L96,316.6 C110,380 130,418.8 160,418.8 C195,418.8 215,370 232,316.6 L256,313 L330,27.4 L352,70 L380,110 L380,450 L58,450 Z"/></clipPath>
+        <clipPath id="water"><path d="M96,316.6 C110,380 130,418.8 160,418.8 C195,418.8 215,370 232,316.6 Z"/></clipPath>
+      </defs>
+      <g clip-path="url(#land)">
+        <rect class="band" data-z="A" x="58" y="0" width="322" height="82.1" fill="var(--z-alpine)"/>
+        <rect class="band" data-z="S" x="58" y="82.1" width="322" height="124.3" fill="var(--z-sub)"/>
+        <rect class="band" data-z="M" x="58" y="206.4" width="322" height="110.2" fill="var(--z-mont)"/>
+        <rect x="58" y="316.6" width="322" height="134" fill="var(--rock)"/>
+      </g>
+      <g clip-path="url(#water)">
+        <rect class="band" data-z="D" x="90" y="345" width="150" height="80" fill="var(--z-deep)"/>
+        <rect class="band" data-z="O" x="118" y="316.6" width="94" height="28.4" fill="var(--z-open)"/>
+        <rect class="band" data-z="N" x="90" y="316.6" width="28" height="28.4" fill="var(--z-near)"/>
+        <rect class="band" data-z="N" x="212" y="316.6" width="28" height="28.4" fill="var(--z-near)"/>
+      </g>
+      <path class="band" data-z="W" d="M232,316.6 L256,313" stroke="var(--z-wet)" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <g stroke="var(--muted)" stroke-width=".6" stroke-dasharray="2 3" opacity=".7" fill="none">
+        <path d="M58,27.4H330"/><path d="M58,82.1H316"/><path d="M58,206.4H284"/><path d="M58,316.6H96"/><path d="M58,418.8H160"/>
+      </g>
+      <path d="M58,10V440" stroke="var(--muted)" stroke-width="1" fill="none"/>
+      <g class="tick" text-anchor="end">
+        <text x="52" y="31">10,881</text><text x="52" y="86">10,000</text><text x="52" y="210">8,000</text><text x="52" y="320">6,225</text><text x="52" y="422">4,580</text>
+        <text x="52" y="446">ft</text>
+      </g>
+      <text class="lab" x="330" y="17" text-anchor="middle">Freel Peak</text>
+      <text x="165" y="388" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--on-water)">1,645 ft deep</text>
+    </svg>
+    <figcaption>Vertical scale is true. Horizontal is compressed: the lake is 22 miles long. The lake floor sits about 100 ft lower than Carson City.</figcaption>
+  </figure>
+  <div>
+    <h2 class="keyh">Habitat zones</h2>
+    <ul class="key" id="zones"></ul>
+    <p class="keynote">Boundaries are approximate and shift with slope and aspect.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Plates</h2>
+    <p class="lede" style="font-size:.95rem">Generated with Google Gemini in the manner of a nineteenth-century natural history atlas. These are not Audubon plates and were not painted from specimens, so treat them as illustrations, not identification references. Plate numbers, names and status come from the captions under each image. Ignore any text printed inside a painting; it is generated and can be wrong.</p>
+  </div>
+  <div class="painted" id="painted"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Field sketches</h2>
+    <p class="lede" style="font-size:.95rem">Species still waiting for a painted plate, drawn in code. They keep their place in the plate numbering. Read them as quick sketches for recognition, not identification-grade art.</p>
+  </div>
+  <div class="plates" id="plates"></div>
+</section>
+
+<section>
+  <div class="controls">
+    <div class="row">
+      <input id="q" type="search" placeholder="Search by name, e.g. kokanee or Pinus" aria-label="Search species">
+      <span id="count" aria-live="polite"></span>
+    </div>
+    <div class="row" id="groups"><span class="lbl">Group</span></div>
+    <div class="row" id="statuses"><span class="lbl">Status</span></div>
+  </div>
+  <div class="legend" style="margin-block:16px 24px">
+    <span><i class="tag t-native">Native</i> occurs here naturally</span>
+    <span><i class="tag t-endemic">Endemic</i> found only at Tahoe</span>
+    <span><i class="tag t-listed">Protected</i> state or federal listing, or agency special status</span>
+    <span><i class="tag t-returning">Returning</i> lost, now being restored</span>
+    <span><i class="tag t-introduced">Introduced</i> brought by people</span>
+    <span><i class="tag t-invasive">Invasive</i> introduced and causing harm</span>
+  </div>
+  <div id="list"></div>
+</section>
+
+<section>
+  <h2 style="margin-bottom:18px">What is changing</h2>
+  <div class="changes">
+    <div><h3>The food web was rebuilt by introductions</h3>
+      <p>Lake trout arrived in the late 1880s, kokanee in 1944, and Mysis shrimp in 1963 to 1965. Mysis ate the native Daphnia nearly to nothing by about 1970, which removed the lake's main algae grazer. UC Davis measured average clarity of 102.4 ft in 1968 and 62.3 ft in 2024.</p></div>
+    <div><h3>Cutthroat are coming back</h3>
+      <p>Lahontan cutthroat trout were gone from the lake by the late 1930s. State and federal hatcheries now stock about 100,000 a year, and in 2024 biologists watched fish attempt to spawn on their own in Third Creek at Incline Village, the first such attempt in nearly 90 years.</p></div>
+    <div><h3>Mussels are the threat being held off</h3>
+      <p>Quagga, zebra and golden mussels are not in Tahoe. Golden mussels reached the Sacramento-San Joaquin Delta in 2024, and inspectors intercepted 10 boats carrying them out of about 5,200 inspections in the 2026 season. New Zealand mudsnails did get in and were found off the south shore in September 2023.</p></div>
+    <div><h3>The forest is second growth under stress</h3>
+      <p>Most of the basin was logged between the 1860s and 1890s to timber the Comstock mines. The forest that grew back is dense and heavy with white fir. Drought, bark beetles and fire now drive it: the Angora Fire in 2007 and the Caldor Fire in 2021 both burned inside the basin.</p></div>
+    <div><h3>One plant tracks the waterline</h3>
+      <p>Tahoe yellow cress grows only on Tahoe's sandy beaches, so high lake levels drown its habitat and low levels expose more. The 2025 survey counted about 5,575 plants on 19 beaches.</p></div>
+  </div>
+</section>
+
+<footer>
+  <p><b style="color:var(--ink)">Scope and limits.</b> This is a selection, not a census. More than a thousand plant species and roughly 300 bird species have been recorded in the basin (both figures approximate). Entries cover what is common, ecologically important, protected, or invasive. Introduction dates and survey numbers come from the sources below; natural history notes are standard Sierra Nevada references. Items where the record is unsettled say so in the entry. Legal listings change, so confirm status with the agency before relying on it.</p>
+  <p><b style="color:var(--ink)">Photos.</b> Entry thumbnails are lead images from Wikipedia, hosted on Wikimedia Commons. Each one credits its photographer and license and links to its file page.</p>
+  <p><b style="color:var(--ink)">Plates.</b> The painted plates were generated with Google Gemini. They imitate the look of historical natural history plates but are not works by John James Audubon or any other naturalist, and their anatomy has not been checked against specimens.</p>
+  <ul>
+    <li><a href="https://tahoe.ucdavis.edu/Tahoe-Species">UC Davis Tahoe Environmental Research Center, Tahoe species</a></li>
+    <li><a href="https://www.fs.usda.gov/r05/laketahoebasin/animals-plants">USDA Forest Service, Lake Tahoe Basin Management Unit, animals and plants</a></li>
+    <li><a href="https://thresholds.laketahoeinfo.org/ThresholdCategory/Detail/Wildlife">TRPA threshold evaluation, wildlife</a></li>
+    <li><a href="https://dcnr.nv.gov/news/annual-survey-provides-key-insights-into-status-of-tahoe-yellow-cress/">Nevada DCNR, 2025 Tahoe yellow cress survey</a></li>
+    <li><a href="https://thenevadaindependent.com/article/lahontan-cutthroat-trout-were-once-wiped-from-tahoe-scientists-have-them-spawning-again">The Nevada Independent, cutthroat spawning in Third Creek (2024)</a></li>
+    <li><a href="https://www.fox5vegas.com/2026/10/29/tahoe-inspectors-intercept-10-boats-with-golden-mussels/">FOX5, golden mussel interceptions (Oct 2026)</a></li>
+    <li><a href="https://content.govdelivery.com/accounts/CNRA/bulletins/371c392">California Natural Resources Agency, New Zealand mudsnail discovery</a></li>
+  </ul>
+</footer>
+</div>
+
+<script>
+// Zones: A alpine, S subalpine, M montane forest, W wet ground (shore, marsh, meadow, stream),
+// N nearshore shallows, O open water, D deep lake.
+const ZONES = [
+  ["A","Alpine","above about 10,000 ft","--z-alpine"],
+  ["S","Subalpine","about 8,000 to 10,000 ft","--z-sub"],
+  ["M","Montane forest","6,225 to about 8,000 ft","--z-mont"],
+  ["W","Shore, marsh, meadow and stream","wet ground at any elevation","--z-wet"],
+  ["N","Nearshore shallows","rocky and sandy lake margin","--z-near"],
+  ["O","Open water","surface to about 300 ft","--z-open"],
+  ["D","Deep lake","below about 300 ft to 1,645 ft","--z-deep"]
+];
+const ZNAME = Object.fromEntries(ZONES.map(z => [z[0], z[1]]));
+const GROUPS = ["Trees","Shrubs","Wildflowers and other plants","Aquatic plants and algae","Mammals","Birds","Fish","Amphibians and reptiles","Invertebrates"];
+const SLABEL = {native:"Native",endemic:"Endemic",listed:"Protected",returning:"Returning",introduced:"Introduced",invasive:"Invasive"};
+
+// [group index, common name, scientific name, statuses, zones, note]
+const S = [
+// Trees
+[0,"Jeffrey pine","Pinus jeffreyi","native","M","The signature tree at lake level. Furrowed bark smells of vanilla or butterscotch on a warm day. Long needles in threes, large cones with inward-curved prickles."],
+[0,"White fir","Abies concolor","native","M","Shade tolerant, and far more abundant than before the Comstock logging and a century of fire suppression. Dense stands are the main fuel and beetle problem."],
+[0,"Sugar pine","Pinus lambertiana","native","M","Tallest pine in the basin, with the longest cones of any conifer, often over a foot. Heavily cut in the 1800s and hit by white pine blister rust."],
+[0,"Incense cedar","Calocedrus decurrens","native","M","Flat sprays of scale leaves and fibrous cinnamon bark. Mostly on the west and south shores below about 7,000 ft."],
+[0,"Lodgepole pine","Pinus contorta subsp. murrayana","native","MSW","Two short needles per bundle, thin scaly bark. Rings meadows and wet flats and climbs to treeline."],
+[0,"Red fir","Abies magnifica","native","MS","Dominates the deep snow belt from roughly 7,000 to 9,000 ft. Deep red-brown bark on old trees, upright cones that fall apart on the branch."],
+[0,"Western white pine","Pinus monticola","native","S","Five needle pine of the upper forest with checkered bark and slender cones. Also vulnerable to blister rust."],
+[0,"Mountain hemlock","Tsuga mertensiana","native","S","Drooping leader and soft blue-green foliage. Favors north slopes where snow lingers."],
+[0,"Whitebark pine","Pinus albicaulis","native,listed","SA","Treeline pine, often wind-shaped into low krummholz. Its seeds are planted almost entirely by Clark's nutcracker. Listed as threatened under the federal Endangered Species Act in December 2022."],
+[0,"Sierra juniper","Juniperus grandis","native","MS","Massive twisted trunks on exposed granite. Individual trees can live well over 1,000 years."],
+[0,"Quaking aspen","Populus tremuloides","native","MSW","Grows as clones from shared roots along streams and seeps. Old groves carry carvings left by Basque sheepherders. Gold in early October."],
+[0,"Black cottonwood","Populus trichocarpa","native","W","Largest broadleaf tree in the basin, along the lower reaches of the bigger streams."],
+[0,"Mountain alder","Alnus incana subsp. tenuifolia","native","W","Forms thickets along nearly every creek. Fixes nitrogen and shades trout water."],
+// Shrubs
+[1,"Greenleaf manzanita","Arctostaphylos patula","native","M","Smooth red bark and round bright green leaves. Sprouts back fast after fire."],
+[1,"Pinemat manzanita","Arctostaphylos nevadensis","native","MS","A knee-high mat under open pine and fir, and over granite."],
+[1,"Huckleberry oak","Quercus vacciniifolia","native","MS","A true oak that never becomes a tree. Covers dry rocky slopes; its acorns feed bears, jays and squirrels."],
+[1,"Tobacco brush","Ceanothus velutinus","native","M","Sticky, strongly scented evergreen leaves. Seeds wait in the soil for decades and germinate after fire."],
+[1,"Mahala mat","Ceanothus prostratus","native","M","Holly-like leaves in a flat carpet under Jeffrey pine, with blue flower clusters in late spring."],
+[1,"Antelope bitterbrush","Purshia tridentata","native","M","Key winter and migration browse for mule deer on the drier east side."],
+[1,"Mountain big sagebrush","Artemisia tridentata subsp. vaseyana","native","MS","Great Basin vegetation reaches into the basin along the Carson Range and on south-facing slopes."],
+[1,"Sierra currant","Ribes nevadense","native","MW","Pink flower clusters and blue-black berries along shaded streams. Currants and gooseberries are the alternate host for blister rust."],
+[1,"Lemmon's willow","Salix lemmonii","native","W","One of several willows that build the streamside and meadow thickets used by nesting songbirds and beaver."],
+[1,"Creek dogwood","Cornus sericea","native","W","Red stems that stand out against snow along stream banks."],
+[1,"Thimbleberry","Rubus parviflorus","native","MW","Large maple-shaped leaves and soft red berries in moist shade."],
+[1,"Red mountain heather","Phyllodoce breweri","native","SA","Low evergreen with rose-pink flowers around high lakes and seeps."],
+[1,"Western Labrador tea","Rhododendron columbianum","native","SW","White flower clusters at the edges of bogs and lake shores. Toxic."],
+// Wildflowers and other plants
+[2,"Tahoe yellow cress","Rorippa subumbellata","endemic,listed","W","A small mustard that grows only on Lake Tahoe's sandy beaches. California lists it as endangered and Nevada as critically endangered. A conservation agreement kept it off the federal list in 2015. Stay out of fenced beach plots."],
+[2,"Tahoe draba","Draba asterophora","native,listed","A","A yellow-flowered cushion plant of gravelly summits such as Freel Peak and Mount Rose. Known from only a few peaks around the basin and ranked rare by the California Native Plant Society."],
+[2,"Snow plant","Sarcodes sanguinea","native","M","Bright red and leafless, pushing up through pine duff as the snow melts. It has no chlorophyll and takes its food from the fungi attached to conifer roots."],
+[2,"Woolly mule's ears","Wyethia mollis","native","M","Large gray felted leaves and yellow sunflower heads across open volcanic slopes in June."],
+[2,"Large-leaved lupine","Lupinus polyphyllus","native","W","Tall blue-purple spikes in wet meadows and on exposed beaches. Low-water years bring large blooms to the north shore."],
+[2,"Brewer's lupine","Lupinus breweri","native","MS","Silver mats with small violet flowers on dry sandy flats."],
+[2,"Giant red paintbrush","Castilleja miniata","native","MW","Red bracts in moist meadows. Paintbrushes tap the roots of neighboring plants."],
+[2,"Crimson columbine","Aquilegia formosa","native","MW","Nodding red and yellow flowers along streams, worked by hummingbirds."],
+[2,"Sierra tiger lily","Lilium parvum","native","W","Small orange bells on tall stalks in willow thickets and streamside shade."],
+[2,"Corn lily","Veratrum californicum","native","W","Pleated leaves and tall white flower stalks in wet meadows. Poisonous to livestock and people."],
+[2,"Common camas","Camassia quamash","native","W","Blue stars in spring-wet meadows. The bulb was a staple food for the Washoe, whose homeland includes the lake."],
+[2,"Elephant's head","Pedicularis groenlandica","native","W","Pink flowers shaped like a trunk and ears, in saturated meadow soil."],
+[2,"Western blue flag","Iris missouriensis","native","W","Pale blue iris of meadows that are wet in spring and dry by late summer."],
+[2,"Mountain pride","Penstemon newberryi","native","MS","Magenta flowers spilling out of cracks in granite and road cuts."],
+[2,"Scarlet gilia","Ipomopsis aggregata","native","MS","Red trumpets on open slopes, a main nectar source for hummingbirds."],
+[2,"Spreading phlox","Phlox diffusa","native","MSA","Low cushions covered in white to lavender flowers soon after snowmelt."],
+[2,"Sulphur buckwheat","Eriogonum umbellatum","native","MSA","Yellow umbels over gray mats on dry gravel. Flowers rust to orange with age."],
+[2,"Pussypaws","Calyptridium umbellatum","native","MSA","Flat rosettes on bare sand. Flower stems lift off hot ground at midday and lie back down at night."],
+[2,"Fireweed","Chamerion angustifolium","native","MS","Magenta spikes that fill burns and avalanche paths."],
+[2,"Alpine gold","Hulsea algida","native","A","Sticky, aromatic yellow daisy in talus near the highest summits."],
+[2,"Wolf lichen","Letharia vulpina","native","MS","Chartreuse lichen on fir and pine trunks. It does not grow where snow buries the bark, so its lower edge marks typical snow depth."],
+[2,"Cheatgrass","Bromus tectorum","invasive","M","Annual grass from Eurasia that dries early and carries fire. Established on the east side and along roads."],
+[2,"Bull thistle","Cirsium vulgare","invasive","MW","Spiny biennial weed of disturbed meadows, trailheads and burn scars."],
+// Aquatic plants and algae
+[3,"Stonewort beds","Chara spp.","native","D","Deepwater plant beds of stonewort, mosses and liverworts grow on the lake floor, recorded deeper than 300 ft because the water is so clear. They are the home of Tahoe's endemic deepwater invertebrates and have shrunk as clarity has declined."],
+[3,"Canadian waterweed","Elodea canadensis","native","N","Native rooted plant of sheltered bays and marsh channels."],
+[3,"Attached algae (periphyton)","Gomphoneis herculeana and others","native","N","The slippery coat on nearshore rocks. A stalked diatom blooms in spring; mats of green filamentous algae in summer are becoming more common and are a visible sign of nutrient loading."],
+[3,"Phytoplankton","Cyclotella and other diatoms","native","O","Free-floating algae. Very small diatoms such as Cyclotella scatter light strongly, and their abundance is tied to year-to-year clarity."],
+[3,"Eurasian watermilfoil","Myriophyllum spicatum","invasive","N","Feathery weed that spreads from fragments. Established for decades, centered on the Tahoe Keys, with satellite patches in marinas and creek mouths."],
+[3,"Curlyleaf pondweed","Potamogeton crispus","invasive","N","Wavy-edged leaves. Found in 2003, it spreads by hardened buds called turions and shelters nonnative warmwater fish."],
+// Mammals
+[4,"American black bear","Ursus americanus","native","MSW","Common around the whole lake and often brown or cinnamon, not black. Most conflicts trace to unsecured trash and food. The California grizzly, which also lived here, was gone from the state by the 1920s."],
+[4,"Coyote","Canis latrans","native","MSW","Seen in meadows and neighborhoods year-round, hunting voles through the snow in winter."],
+[4,"Mountain lion","Puma concolor","native","MS","Present throughout but rarely seen. Follows the deer."],
+[4,"Bobcat","Lynx rufus","native","M","Hunts rabbits and rodents in brushy forest and rocky ground."],
+[4,"Mule deer","Odocoileus hemionus","native,listed","MSW","Summer residents that migrate over the Carson Range to winter in Nevada's lower valleys. A TRPA special interest species."],
+[4,"Pacific marten","Martes caurina","native","MS","Tree-climbing weasel of old red fir forest. Hunts squirrels and voles, and stays active under the snowpack in winter."],
+[4,"Long-tailed weasel","Neogale frenata","native","MSW","Brown in summer, white in winter with a black tail tip."],
+[4,"Sierra Nevada red fox","Vulpes vulpes necator","native,listed","SA","One of the rarest mammals in North America. The Sierra Nevada population was listed as federally endangered in 2021. Confirmed animals are mostly south of Tahoe near Sonora Pass; treat any basin sighting as unverified unless documented."],
+[4,"North American beaver","Castor canadensis","native","W","Dams on Taylor Creek, the Upper Truckee and many other streams. Long described as introduced in the 1900s; physical and historical evidence now indicates beaver are native to the Sierra, though the question is still argued."],
+[4,"Raccoon","Procyon lotor","native","MW","Mostly near water and around homes."],
+[4,"North American porcupine","Erethizon dorsatum","native","MS","Once common, now seldom seen across the Sierra. The cause of the decline is not well understood."],
+[4,"Snowshoe hare","Lepus americanus","native","MS","Turns white in winter. Uses dense young fir and streamside thickets."],
+[4,"American pika","Ochotona princeps","native","SA","A small relative of rabbits that lives in talus and dries plants in haypiles for winter. Sensitive to heat; a 2017 study found it had vanished from a large area around Mount Pluto north of the lake."],
+[4,"Yellow-bellied marmot","Marmota flaviventris","native","SA","Sunbathes on boulders near meadows. Hibernates for more than half the year."],
+[4,"Douglas squirrel (chickaree)","Tamiasciurus douglasii","native","MS","Small, loud tree squirrel that cuts green cones and stores them in piles."],
+[4,"Golden-mantled ground squirrel","Callospermophilus lateralis","native","MS","Looks like an oversized chipmunk, but has no stripes on its face."],
+[4,"California ground squirrel","Otospermophilus beecheyi","native","M","The common ground squirrel at lake level, in rock piles and along roadsides."],
+[4,"Belding's ground squirrel","Urocitellus beldingi","native","W","Stands upright in mountain meadows and whistles alarms."],
+[4,"Chipmunks","Neotamias spp.","native","MSA","Several species sort themselves by elevation and habitat, including yellow-pine, lodgepole and long-eared chipmunks."],
+[4,"Humboldt's flying squirrel","Glaucomys oregonensis","native","MS","Nocturnal glider of old forest. A staple prey of spotted owls."],
+[4,"Mountain beaver","Aplodontia rufa","native","W","Not a beaver. A burrowing rodent of wet thickets on steep, seepy slopes, and the last living member of its family."],
+[4,"Bats","Myotis and other genera","native","MW","Several species hunt insects over the lake, marshes and meadows on summer evenings."],
+// Birds
+[5,"Bald eagle","Haliaeetus leucocephalus","native,listed","WNO","Numbers peak in winter, and a few pairs nest near the lake. Endangered under California law and a TRPA special interest species. An annual midwinter count covers the shoreline."],
+[5,"Osprey","Pandion haliaetus","native,listed","WNO","Nests on dead-topped trees and rock pinnacles near the shore and plunges for fish. TRPA special interest species."],
+[5,"Peregrine falcon","Falco peregrinus","native,listed","MS","Returned to nest on cliffs around the basin after its national recovery. TRPA special interest species."],
+[5,"Golden eagle","Aquila chrysaetos","native,listed","SA","Hunts marmots and ground squirrels over open high country. TRPA special interest species."],
+[5,"Northern goshawk","Accipiter atricapillus","native,listed","MS","Large forest hawk that needs mature, closed-canopy stands. Forest Service sensitive species and TRPA special interest species."],
+[5,"California spotted owl","Strix occidentalis occidentalis","native,listed","M","Depends on old forest with large trees and snags. Proposed for federal listing in 2023; check the current status."],
+[5,"Willow flycatcher","Empidonax traillii","native,listed","W","Nests only in wet meadows with dense willow. Endangered in California and now very scarce in the Sierra."],
+[5,"Common merganser","Mergus merganser","native","WN","The fish-eating duck seen trailing a line of chicks along the shore in summer."],
+[5,"Mallard","Anas platyrhynchos","native","WN","Most common duck on marshes, creek mouths and beaches."],
+[5,"Canada goose","Branta canadensis","native","WN","Resident year-round on lawns, beaches and marshes."],
+[5,"California gull","Larus californicus","native","NO","The usual gull on the lake."],
+[5,"American dipper","Cinclus mexicanus","native","W","Slate-gray songbird that walks underwater in fast streams to pick insect larvae off the rocks."],
+[5,"Steller's jay","Cyanocitta stelleri","native","M","Crested, dark blue, bold around camps. Imitates hawk calls."],
+[5,"Mountain chickadee","Poecile gambeli","native","MS","Black cap with a white eyebrow. Its three-note whistle is the sound of the forest in spring."],
+[5,"Clark's nutcracker","Nucifraga columbiana","native","SA","Buries tens of thousands of pine seeds each fall and remembers most of them. The seeds it misses become whitebark pines."],
+[5,"White-headed woodpecker","Dryobates albolarvatus","native","M","Black body, white head. Tied to mature pine, where it eats pine seeds as well as insects."],
+[5,"Black-backed woodpecker","Picoides arcticus","native","MS","Specialist of recently burned forest, feeding on beetle larvae in dead trees. Look in the Angora and Caldor burn areas."],
+[5,"Pileated woodpecker","Dryocopus pileatus","native","M","Crow-sized, with a red crest. Leaves large rectangular holes in dead trunks."],
+[5,"Northern flicker","Colaptes auratus","native","MS","Ground-feeding woodpecker with salmon-red underwings."],
+[5,"Red-breasted nuthatch","Sitta canadensis","native","MS","Works down trunks headfirst. Nasal, tin-horn call."],
+[5,"Western tanager","Piranga ludoviciana","native","M","Yellow body, black wings, red-orange head on the male. Arrives in May."],
+[5,"Dark-eyed junco","Junco hyemalis","native","MS","Dark hood and white outer tail feathers. Nests on the ground."],
+[5,"Calliope hummingbird","Selasphorus calliope","native","MW","Smallest breeding bird in North America. Nests near mountain meadows and streams."],
+[5,"Mountain quail","Oreortyx pictus","native","M","Long straight head plume. Heard more than seen in dense brush."],
+[5,"Sooty grouse","Dendragapus fuliginosus","native","MS","Males give a very low hooting from high in firs in spring."],
+[5,"Mountain bluebird","Sialia currucoides","native","SA","Sky-blue male hovers over open high meadows and slopes. Nevada's state bird."],
+[5,"Gray-crowned rosy-finch","Leucosticte tephrocotis","native","A","Feeds at the edges of snowfields on the highest peaks."],
+[5,"American yellow warbler","Setophaga aestiva","native","W","Bright yellow singer of willow and alder thickets."],
+// Fish
+[6,"Lahontan cutthroat trout","Oncorhynchus clarkii henshawi","native,listed,returning","NOW","Tahoe's original top predator and Nevada's state fish. A 31 lb 8 oz fish was taken from the lake in 1911. Federally threatened. Gone from the lake by the late 1930s after logging, overfishing, dams and introduced trout; now restocked each year with hatchery fish."],
+[6,"Mountain whitefish","Prosopium williamsoni","native","NOW","The only native game fish that never left. A bottom feeder in the lake and its colder streams."],
+[6,"Lahontan tui chub","Siphateles bicolor","native","NO","Two forms share the lake: one feeds on the bottom near shore, the other strains plankton in open water."],
+[6,"Lahontan redside","Richardsonius egregius","native","N","Small schooling minnow, often under piers. Breeding fish show a red stripe along the side."],
+[6,"Lahontan speckled dace","Rhinichthys osculus robustus","native","NW","Spotted minnow of shallow rocky shoreline and streams."],
+[6,"Tahoe sucker","Catostomus tahoensis","native","ND","Feeds on the bottom at night on algae, detritus and invertebrates."],
+[6,"Mountain sucker","Catostomus platyrhynchus","native","W","A smaller sucker of the tributary streams."],
+[6,"Paiute sculpin","Cottus beldingii","native","NDW","Mottled bottom fish with a broad head, living from stream riffles to deep water. Important prey for trout."],
+[6,"Lake trout (mackinaw)","Salvelinus namaycush","introduced","OD","Introduced in the late 1880s and now the top predator and main sport fish. Its predation is a central obstacle to restoring cutthroat."],
+[6,"Kokanee salmon","Oncorhynchus nerka","introduced","OW","Landlocked sockeye, established after a hatchery release in 1944. Turns red and runs up Taylor Creek to spawn each October."],
+[6,"Rainbow trout","Oncorhynchus mykiss","introduced","NOW","Stocked since the 1800s. Hybridizes with cutthroat."],
+[6,"Brown trout","Salmo trutta","introduced","NW","European trout that preys on native fish, mostly near stream mouths and in the tributaries."],
+[6,"Brook trout","Salvelinus fontinalis","introduced","W","Eastern char now in many streams and high lakes. Its stocking helped eliminate mountain yellow-legged frogs from those lakes."],
+[6,"Largemouth bass","Micropterus salmoides","invasive","N","Warmwater fish established in the Tahoe Keys and marinas since the 1980s, along with smallmouth bass. They eat native minnows in the weed beds."],
+[6,"Bluegill","Lepomis macrochirus","invasive","N","Warmwater sunfish in the same marinas and weed beds, along with brown bullhead catfish."],
+[6,"Goldfish","Carassius auratus","invasive","N","Dumped aquarium fish. University of Nevada researchers netted very large ones in 2013."],
+// Amphibians and reptiles
+[7,"Sierra Nevada yellow-legged frog","Rana sierrae","native,listed","SW","Once the most common frog of Sierra high lakes. Stocked trout and chytrid fungus removed it from most of its range. Federally endangered since 2014, with recovery work in Desolation Wilderness."],
+[7,"Sierran treefrog","Pseudacris sierra","native","MSW","The small frog behind the spring chorus at every pond and meadow."],
+[7,"Western toad","Anaxyrus boreas","native","MW","Breeds in shallow meadow pools and lake edges, then lives on land."],
+[7,"Long-toed salamander","Ambystoma macrodactylum","native","MSW","Dark with a yellow-green back stripe. Breeds in ponds at snowmelt and spends most of the year underground."],
+[7,"American bullfrog","Lithobates catesbeianus","invasive","WN","Eastern frog established in warm south shore marshes and lagoons. Eats native frogs, fish and ducklings."],
+[7,"Western fence lizard","Sceloporus occidentalis","native","M","Blue belly patches. Common on sunny rocks and logs."],
+[7,"Sagebrush lizard","Sceloporus graciosus","native","MS","Smaller and smoother-scaled than the fence lizard. Ranges higher."],
+[7,"Northern alligator lizard","Elgaria coerulea","native","M","Long-bodied lizard of damp forest floor and log piles."],
+[7,"Rubber boa","Charina bottae","native","M","Small, docile, loose-skinned boa. Active at dusk and tolerant of cold."],
+[7,"Western terrestrial garter snake","Thamnophis elegans","native","MW","The garter snake seen most often, in meadows and along the lakeshore."],
+[7,"Sierra garter snake","Thamnophis couchii","native","W","Strongly aquatic. Hunts fish and tadpoles in streams."],
+[7,"Western rattlesnake","Crotalus oreganus","native","M","Rarely reported inside the basin, where the cold limits it. More likely on the lower, warmer east slope toward Carson Valley."],
+// Invertebrates
+[8,"Lake Tahoe stonefly","Capnia lacustra","endemic","D","A wingless stonefly that spends its whole life underwater in the deep plant beds. It lives nowhere else."],
+[8,"Tahoe blind amphipods","Stygobromus tahoensis, S. lacicolus","endemic","D","Two eyeless, pale crustaceans of the lake floor. The deepwater community also includes an endemic flatworm and ostracods."],
+[8,"Water fleas","Daphnia and Bosmina","native","O","Algae grazers. Daphnia collapsed around 1970 after Mysis arrived; Bosmina persists."],
+[8,"Copepods","Epischura and Leptodiaptomus","native","O","Now the main native zooplankton in open water."],
+[8,"Mysis shrimp","Mysis diluviana","invasive","OD","Stocked in 1963 to 1965 as trout food. It stays deep by day and rises at night to eat zooplankton, so trout gained less than planned and the native grazers were lost. Removal by trawling has been tested as a way to restore clarity."],
+[8,"Signal crayfish","Pacifastacus leniusculus","invasive","N","Introduced in the late 1800s and now numbering in the hundreds of millions by common estimates. Under every nearshore rock. Its waste fertilizes attached algae."],
+[8,"Asian clam","Corbicula fluminea","invasive","N","First found in 2002. Dense beds in the southeast part of the lake release nutrients that feed algae blooms. Controlled with rubber bottom barriers."],
+[8,"New Zealand mudsnail","Potamopyrgus antipodarum","invasive","N","Found off the south shore in September 2023. Females clone themselves, and the snails survive on wet gear, which is why waders and paddlecraft need to be cleaned, drained and dried."],
+[8,"Western pearlshell mussel","Margaritifera falcata","native","W","A native freshwater mussel in the Upper Truckee River. Individuals can live for decades, and its larvae hitch a ride on the gills of trout."],
+[8,"Bark beetles","Dendroctonus and Scolytus spp.","native","MS","Jeffrey pine beetle, mountain pine beetle and fir engraver are native and normally thin weak trees. Drought and overcrowded stands turn them into the leading cause of tree death."]
+];
+
+const PLATES = [["Jeffrey pine","jpine"],["Quaking aspen","aspen"],["Snow plant","snow"],["Tahoe yellow cress","cress"],["Woolly mule's ears","mule"],["Large-leaved lupine","lupine"],["Crimson columbine","colum"],["American black bear","bear"],["Pacific marten","marten"],["American pika","pika"],["Bald eagle","eagle"],["Steller's jay","jay"],["Mountain chickadee","chick"],["Clark's nutcracker","nut"],["White-headed woodpecker","wood"],["Western tanager","tan"],["Mountain bluebird","blue"],["Lahontan cutthroat trout","lct"],["Kokanee salmon","kok"],["Lake trout (mackinaw)","mack"],["Sierra Nevada yellow-legged frog","frog"],["Western fence lizard","liz"],["Signal crayfish","cray"],["Mysis shrimp","mysis"]];
+const PLATE_OF = Object.fromEntries(PLATES);
+// Painted plates: [file, alt-cue, wide?]
+// Plate images are the generated originals, scaled to a 1400px long edge. Never cropped.
+const PAINTED = {
+  "Jeffrey pine": "img/jeffrey-pine.jpg",
+  "Quaking aspen": "img/quaking-aspen.jpg",
+  "Snow plant": "img/snow-plant.jpg",
+  "Tahoe yellow cress": "img/yellow-cress.jpg",
+  "Woolly mule's ears": "img/mules-ears.jpg",
+  "Large-leaved lupine": "img/lupine.jpg",
+  "Crimson columbine": "img/columbine.jpg",
+  "American black bear": "img/black-bear.jpg",
+  "Pacific marten": "img/pacific-marten.jpg",
+  "American pika": "img/pika.jpg",
+  "Bald eagle": "img/bald-eagle.jpg",
+  "Steller's jay": "img/stellers-jay.jpg",
+  "Mountain chickadee": "img/chickadee.jpg",
+  "Clark's nutcracker": "img/nutcracker.jpg",
+  "White-headed woodpecker": "img/woodpecker.jpg",
+  "Western tanager": "img/western-tanager.jpg",
+  "Mountain bluebird": "img/mountain-bluebird.jpg",
+  "Lahontan cutthroat trout": "img/lahontan-cutthroat.jpg",
+  "Kokanee salmon": "img/kokanee.jpg",
+  "Lake trout (mackinaw)": "img/lake-trout.jpg",
+  "Sierra Nevada yellow-legged frog": "img/yellow-legged-frog.jpg",
+  "Western fence lizard": "img/fence-lizard.jpg",
+  "Signal crayfish": "img/signal-crayfish.jpg",
+  "Mysis shrimp": "img/mysis-shrimp.jpg"
+};
+// Landscape plates span two columns on wide screens
+const WIDE = new Set(["Quaking aspen", "Tahoe yellow cress", "Kokanee salmon", "Lake trout (mackinaw)", "Sierra Nevada yellow-legged frog", "Mysis shrimp"]);
+const SKETCHES = PLATES.filter(([name]) => !PAINTED[name]);
+const roman = n => { let r = ""; [[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]].forEach(([v,s]) => { while (n >= v){ r += s; n -= v; } }); return r; };
+const art = (name, id) => '<svg viewBox="0 0 320 240" role="img" aria-label="Sketch of ' + esc(name) + '"><use href="#p-' + id + '"/></svg>';
+
+// Wikipedia article for each entry. Default is the scientific name (Wikipedia redirects
+// binomials to the article). Overrides cover groups, subspecies, and articles under common names.
+const WIKI = {
+  "Lodgepole pine": "Pinus contorta",
+  "Mountain alder": "Alnus incana",
+  "Mountain big sagebrush": "Artemisia tridentata",
+  "Stonewort beds": "Chara (alga)",
+  "Attached algae (periphyton)": "Periphyton",
+  "Phytoplankton": "Phytoplankton",
+  "Sierra Nevada red fox": "Sierra Nevada red fox",
+  "Chipmunks": "Neotamias",
+  "Bats": "Bat",
+  "Humboldt's flying squirrel": "Humboldt's flying squirrel",
+  "Northern goshawk": "American goshawk",
+  "California spotted owl": "California spotted owl",
+  "Lahontan cutthroat trout": "Lahontan cutthroat trout",
+  "Lahontan tui chub": "Tui chub",
+  "Lahontan redside": "Lahontan redside",
+  "Lahontan speckled dace": "Speckled dace",
+  "Tahoe sucker": "Tahoe sucker",
+  "Mountain sucker": "Mountain sucker",
+  "Paiute sculpin": "Paiute sculpin",
+  "Tahoe blind amphipods": "Stygobromus",
+  "Water fleas": "Daphnia",
+  "Copepods": "Copepod",
+  "Western pearlshell mussel": "Western pearlshell",
+  "Bark beetles": "Bark beetle",
+  "Yellow-bellied marmot": "Yellow-bellied marmot",
+  "American yellow warbler": "American yellow warbler"
+};
+// THUMBS:BEGIN (generated from Wikimedia Commons manifests)
+const THUMBS = {"Abies concolor": {"artist": "Puncsos", "file_page": "https://commons.wikimedia.org/wiki/File:Abies_concolor_Yosemite_NP.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "http://creativecommons.org/licenses/by-sa/3.0/", "thumb": "thumbs/abies-concolor.jpg", "width": 173}, "Abies magnifica": {"artist": "David Prasad from Welches, OR., United States", "file_page": "https://commons.wikimedia.org/wiki/File:Red_fir_forest_Giant_Sequoia_National_Monument.jpg", "height": 307, "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "thumb": "thumbs/abies-magnifica.jpg", "width": 320}, "Alnus incana": {"thumb": "thumbs/alnus-incana.jpg", "width": 240, "height": 320, "artist": "Matt Lavin from Bozeman, Montana, USA", "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "file_page": "https://commons.wikimedia.org/wiki/File:Alnus_incana_(5384547407).jpg", "note": null}, "Ambystoma macrodactylum": {"artist": "Connor Long", "file_page": "https://commons.wikimedia.org/wiki/File:Ambystoma_macrodactylum_sigillatum,_Plumas_County,_CA.jpg", "height": 213, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/ambystoma-macrodactylum.jpg", "width": 320}, "American goshawk": {"artist": "Gillfoto", "file_page": "https://commons.wikimedia.org/wiki/File:American_goshawk.jpg", "height": 320, "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "thumb": "thumbs/american-goshawk.jpg", "width": 315}, "Anas platyrhynchos": {"artist": "This picture was realized by Richard Bartz by using a Canon EF 70-300mm f/4-5.6 IS USM Lens", "file_page": "https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_male_female_quadrat.jpg", "height": 320, "license": "CC BY-SA 2.5", "license_url": "https://creativecommons.org/licenses/by-sa/2.5", "thumb": "thumbs/anas-platyrhynchos.jpg", "width": 320}, "Anaxyrus boreas": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Bufo_boreas_5629.JPG", "height": 213, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/anaxyrus-boreas.jpg", "width": 320}, "Aplodontia rufa": {"artist": "Western Ecological Research Center", "file_page": "https://commons.wikimedia.org/wiki/File:Aplodontia.jpg", "height": 133, "license": "Public domain", "license_url": null, "thumb": "thumbs/aplodontia-rufa.jpg", "width": 200}, "Aquila chrysaetos": {"artist": "Giles Laurent", "file_page": "https://commons.wikimedia.org/wiki/File:015_Wild_Golden_Eagle_in_flight_at_Pfyn-Finges_(Switzerland)_Photo_by_Giles_Laurent.jpg", "height": 320, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/aquila-chrysaetos.jpg", "width": 256}, "Arctostaphylos nevadensis": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Arctostaphylos_nevadensis_7751.JPG", "height": 213, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/arctostaphylos-nevadensis.jpg", "width": 320}, "Arctostaphylos patula": {"artist": "Walter Siegmund", "file_page": "https://commons.wikimedia.org/wiki/File:Arctostaphylos_patula_08399.JPG", "height": 240, "license": "CC BY 2.5", "license_url": "https://creativecommons.org/licenses/by/2.5", "thumb": "thumbs/arctostaphylos-patula.jpg", "width": 320}, "Artemisia tridentata": {"artist": "Peemus", "file_page": "https://commons.wikimedia.org/wiki/File:Sagebrushsjc.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/artemisia-tridentata.jpg", "width": 240}, "Bark beetle": {"artist": null, "file_page": "https://commons.wikimedia.org/wiki/File:Dendroctonus_ponderosae.jpg", "height": 300, "license": "Public domain", "license_url": null, "thumb": "thumbs/bark-beetle.jpg", "width": 300}, "Bat": {"artist": "PD-USGov, exact author unknown", "file_page": "https://commons.wikimedia.org/wiki/File:Big-eared-townsend-fledermaus.jpg", "height": 195, "license": "Public domain", "license_url": null, "thumb": "thumbs/bat.jpg", "width": 320}, "Branta canadensis": {"artist": "USFWS Mountain-Prairie", "file_page": "https://commons.wikimedia.org/wiki/File:Canada_goose_on_Seedskadee_NWR_(27826185489).jpg", "height": 243, "license": "Public domain", "license_url": null, "thumb": "thumbs/branta-canadensis.jpg", "width": 320}, "Bromus tectorum": {"thumb": "thumbs/bromus-tectorum.jpg", "width": 320, "height": 240, "artist": "AnRo0002", "license": "CC0", "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en", "file_page": "https://commons.wikimedia.org/wiki/File:20150608Bromus_tectorum1.jpg", "note": null}, "California spotted owl": {"thumb": "thumbs/california-spotted-owl.jpg", "width": 320, "height": 240, "artist": "Ryan Kalinowski, USDA Forest Service Pacific Southwest Region", "license": "Public domain (US federal work)", "license_url": null, "file_page": "https://commons.wikimedia.org/wiki/File:California_Spotted_Owl,_Stanislaus_National_Forest_(8427894580).jpg", "note": null}, "Callospermophilus lateralis": {"artist": "Charles J. Sharp", "file_page": "https://commons.wikimedia.org/wiki/File:Rocky_Mountain_golden-mantled_ground_squirrel_(Callospermophilus_lateralis_tescorum)_Hwy_93_2.jpg", "height": 213, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/callospermophilus-lateralis.jpg", "width": 320}, "Calocedrus decurrens": {"artist": "Victor R. Ruiz from Arinaga, Canary Islands, Spain", "file_page": "https://commons.wikimedia.org/wiki/File:Calocedrus_decurrens_Yosemite_NP.jpg", "height": 320, "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "thumb": "thumbs/calocedrus-decurrens.jpg", "width": 231}, "Calyptridium umbellatum": {"artist": "Walter Siegmund", "file_page": "https://commons.wikimedia.org/wiki/File:Cistanthe_umbellata_22872.JPG", "height": 240, "license": "CC BY 2.5", "license_url": "https://creativecommons.org/licenses/by/2.5", "thumb": "thumbs/calyptridium-umbellatum.jpg", "width": 320}, "Camassia quamash": {"artist": "William & Wilma Follette @ USDA-NRCS PLANTS Database / USDA NRCS. 1992. Western wetland flora: Field office guide to plant species. West Region, Sacramento, California.", "file_page": "https://commons.wikimedia.org/wiki/File:Camassia_quamash_(Pursh)_Greene.jpg", "height": 320, "license": "Public domain", "license_url": null, "thumb": "thumbs/camassia-quamash.jpg", "width": 232}, "Canis latrans": {"artist": "Yathin S Krishnappa", "file_page": "https://commons.wikimedia.org/wiki/File:2009-Coyote-Yosemite.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/canis-latrans.jpg", "width": 276}, "Carassius auratus": {"artist": "לינה אבוגוש", "file_page": "https://commons.wikimedia.org/wiki/File:Gold_fish1.jpg", "height": 208, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/carassius-auratus.jpg", "width": 320}, "Castilleja miniata": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Castilleja_miniata_4898.JPG", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/castilleja-miniata.jpg", "width": 213}, "Castor canadensis": {"artist": "Steve from Washington, DC, USA", "file_page": "https://commons.wikimedia.org/wiki/File:American_Beaver.jpg", "height": 320, "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "thumb": "thumbs/castor-canadensis.jpg", "width": 320}, "Ceanothus prostratus": {"artist": "Adam Schneider", "file_page": "https://commons.wikimedia.org/wiki/File:Mahala_mat.jpg", "height": 240, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/ceanothus-prostratus.jpg", "width": 320}, "Ceanothus velutinus": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Ceanothus_velutinus_4687.JPG", "height": 213, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/ceanothus-velutinus.jpg", "width": 320}, "Chamerion angustifolium": {"artist": "kallerna", "file_page": "https://commons.wikimedia.org/wiki/File:Maitohorsma_(Epilobium_angustifolium).JPG", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/chamerion-angustifolium.jpg", "width": 144}, "Chara (alga)": {"artist": "Christian Fischer", "file_page": "https://commons.wikimedia.org/wiki/File:CharaGlobularis.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/chara-alga.jpg", "width": 261}, "Charina bottae": {"artist": "andrewnydam", "file_page": "https://commons.wikimedia.org/wiki/File:Charina_bottae_190641848.jpg", "height": 213, "license": "CC BY 4.0", "license_url": "https://creativecommons.org/licenses/by/4.0", "thumb": "thumbs/charina-bottae.jpg", "width": 320}, "Cinclus mexicanus": {"artist": "Polinova", "file_page": "https://commons.wikimedia.org/wiki/File:AmericanDipper.jpg", "height": 256, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/cinclus-mexicanus.jpg", "width": 320}, "Cirsium vulgare": {"artist": "AnRo0002", "file_page": "https://commons.wikimedia.org/wiki/File:20160729Cirsium_vulgare5.jpg", "height": 240, "license": "CC0", "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en", "thumb": "thumbs/cirsium-vulgare.jpg", "width": 320}, "Colaptes auratus": {"artist": "Rhododendrites", "file_page": "https://commons.wikimedia.org/wiki/File:Northern_yellow-shafted_flicker_male_(33737)_(cropped).jpg", "height": 320, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/colaptes-auratus.jpg", "width": 320}, "Copepod": {"thumb": "thumbs/copepod.jpg", "width": 320, "height": 251, "artist": "NOAA Great Lakes Environmental Research Laboratory (GLERL)", "license": "Public domain (US federal work)", "license_url": null, "file_page": "https://commons.wikimedia.org/wiki/File:Diaptomus_GLERL_1.jpg", "note": null}, "Corbicula fluminea": {"artist": "USGS", "file_page": "https://commons.wikimedia.org/wiki/File:Corbicula_fluminea.jpg", "height": 291, "license": "Public domain", "license_url": null, "thumb": "thumbs/corbicula-fluminea.jpg", "width": 320}, "Cornus sericea": {"artist": "Sulfur at en.wikipedia", "file_page": "https://commons.wikimedia.org/wiki/File:Red_Osier_Dogwood.jpg", "height": 213, "license": "CC BY-SA 3.0", "license_url": "http://creativecommons.org/licenses/by-sa/3.0/", "thumb": "thumbs/cornus-sericea.jpg", "width": 320}, "Crotalus oreganus": {"artist": "Connor Long", "file_page": "https://commons.wikimedia.org/wiki/File:Crotalus_oreganus.jpg", "height": 213, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/crotalus-oreganus.jpg", "width": 320}, "Daphnia": {"artist": "(Photo: Paul Hebert)", "file_page": "https://commons.wikimedia.org/wiki/File:Daphnia_pulex.png", "height": 320, "license": "CC BY 2.5", "license_url": "https://creativecommons.org/licenses/by/2.5", "thumb": "thumbs/daphnia.jpg", "width": 280}, "Dendragapus fuliginosus": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Dendragapus_fuliginosus_5058.JPG", "height": 213, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/dendragapus-fuliginosus.jpg", "width": 320}, "Draba asterophora": {"artist": "Jim Morefield from Nevada, USA", "file_page": "https://commons.wikimedia.org/wiki/File:Tahoe_draba,_Draba_asterophora_(22427982484).jpg", "height": 240, "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "thumb": "thumbs/draba-asterophora.jpg", "width": 320}, "Dryocopus pileatus": {"artist": "Joshlaymon", "file_page": "https://commons.wikimedia.org/wiki/File:PileatedWoodpeckerFeedingonTree,_crop.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/dryocopus-pileatus.jpg", "width": 289}, "Elgaria coerulea": {"artist": "Meggar at English Wikipedia", "file_page": "https://commons.wikimedia.org/wiki/File:Northern_alligator_lizard.jpg", "height": 242, "license": "CC BY-SA 3.0", "license_url": "http://creativecommons.org/licenses/by-sa/3.0/", "thumb": "thumbs/elgaria-coerulea.jpg", "width": 320}, "Elodea canadensis": {"artist": "Christian Fischer", "file_page": "https://commons.wikimedia.org/wiki/File:ElodeaCanadensis.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/elodea-canadensis.jpg", "width": 279}, "Empidonax traillii": {"artist": "Paul Danese", "file_page": "https://commons.wikimedia.org/wiki/File:20250524_willow_flycatcher_major_donnelly_PD202635.jpg", "height": 320, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/empidonax-traillii.jpg", "width": 320}, "Erethizon dorsatum": {"artist": "Charles J. Sharp", "file_page": "https://commons.wikimedia.org/wiki/File:North_American_porcupine_(Erethizon_dorsatum_nigrescens)_Yoho.jpg", "height": 213, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/erethizon-dorsatum.jpg", "width": 320}, "Eriogonum umbellatum": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Eriogonum_umbellatum_4672.JPG", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/eriogonum-umbellatum.jpg", "width": 213}, "Falco peregrinus": {"artist": "Mykola Swarnyk", "file_page": "https://commons.wikimedia.org/wiki/File:Falco_peregrinus_m_Humber_Bay_Park_Toronto.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/falco-peregrinus.jpg", "width": 263}, "Hulsea algida": {"artist": "Jane S. Richardson (talk · contribs)", "file_page": "https://commons.wikimedia.org/wiki/File:Alpine_gold_Hulsea_algida_side_N_of_Forester.jpg", "height": 320, "license": "CC BY 3.0", "license_url": "https://creativecommons.org/licenses/by/3.0", "thumb": "thumbs/hulsea-algida.jpg", "width": 201}, "Humboldt's flying squirrel": {"artist": "Barbogast", "file_page": "https://commons.wikimedia.org/wiki/File:Glaucomys_oregonensis2.jpg", "height": 320, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/humboldt-s-flying-squirrel.jpg", "width": 253}, "Ipomopsis aggregata": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Ipomopsis_aggregata_5908.JPG", "height": 240, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/ipomopsis-aggregata.jpg", "width": 320}, "Iris missouriensis": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Iris_missouriensis_9423.JPG", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/iris-missouriensis.jpg", "width": 213}, "Junco hyemalis": {"artist": "Cephas", "file_page": "https://commons.wikimedia.org/wiki/File:Junco_hyemalis_hyemalis_CT1_(cropped).jpg", "height": 213, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/junco-hyemalis.jpg", "width": 320}, "Juniperus grandis": {"artist": "Kevin Stanchfield", "file_page": "https://commons.wikimedia.org/wiki/File:Hangmans_Tree_-_Gold_Fever_Trail_-_Big_Bear_California.jpg", "height": 320, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/juniperus-grandis.jpg", "width": 214}, "Lahontan redside": {"artist": "AVNJ", "file_page": "https://commons.wikimedia.org/wiki/File:Lahontan_redside.jpg", "height": 223, "license": "CC BY 4.0", "license_url": "https://creativecommons.org/licenses/by/4.0", "thumb": "thumbs/lahontan-redside.jpg", "width": 320}, "Larus californicus": {"artist": "Polinova", "file_page": "https://commons.wikimedia.org/wiki/File:CaliforniaGull.jpg", "height": 256, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/larus-californicus.jpg", "width": 320}, "Lepomis macrochirus": {"artist": "Paleo1954", "file_page": "https://commons.wikimedia.org/wiki/File:Bluegill_(cropped).jpg", "height": 208, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/lepomis-macrochirus.jpg", "width": 320}, "Lepus americanus": {"artist": "Lepus_americanus_5459.JPG: Walter Siegmund (talk) derivative work: Wsiegmund", "file_page": "https://commons.wikimedia.org/wiki/File:Lepus_americanus_5459_cropped.jpg", "height": 213, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/lepus-americanus.jpg", "width": 320}, "Letharia vulpina": {"artist": "Jason Hollinger", "file_page": "https://commons.wikimedia.org/wiki/File:Letharia_vulpina_JHollinger_crop.jpg", "height": 273, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/letharia-vulpina.jpg", "width": 320}, "Leucosticte tephrocotis": {"artist": "Alan D. Wilson", "file_page": "https://commons.wikimedia.org/wiki/File:Gray-Crowned_Rosy-Finch.jpg", "height": 273, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/leucosticte-tephrocotis.jpg", "width": 320}, "Lilium parvum": {"artist": "John Loganecker", "file_page": "https://commons.wikimedia.org/wiki/File:Lilium_parvum_1.jpg", "height": 320, "license": "Public domain", "license_url": null, "thumb": "thumbs/lilium-parvum.jpg", "width": 213}, "Lithobates catesbeianus": {"artist": "Carl D. Howe", "file_page": "https://commons.wikimedia.org/wiki/File:North-American-bullfrog1.jpg", "height": 247, "license": "CC BY-SA 2.5", "license_url": "https://creativecommons.org/licenses/by-sa/2.5", "thumb": "thumbs/lithobates-catesbeianus.jpg", "width": 320}, "Lupinus breweri": {"artist": "tomhilton", "file_page": "https://commons.wikimedia.org/wiki/File:Lupinusbreweri.jpg", "height": 320, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/lupinus-breweri.jpg", "width": 240}, "Lynx rufus": {"artist": "Becker1999 (Paul and Cathy)", "file_page": "https://commons.wikimedia.org/wiki/File:Bobcat_at_Columbus_Zoo_Boo.jpg", "height": 320, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/lynx-rufus.jpg", "width": 214}, "Mergus merganser": {"artist": "Bengt Nyman from Vaxholm, Sweden", "file_page": "https://commons.wikimedia.org/wiki/File:Mergus_merganser_merganser_2078_(5561922560).jpg", "height": 208, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/mergus-merganser.jpg", "width": 320}, "Micropterus salmoides": {"artist": "USFWS Mountain Prairie", "file_page": "https://commons.wikimedia.org/wiki/File:Largemouth_Bass_(Micropterus_salmoides)_June_2023_(cropped).jpg", "height": 180, "license": "Public domain", "license_url": null, "thumb": "thumbs/micropterus-salmoides.jpg", "width": 320}, "Mountain sucker": {"artist": "Harlan Kredit", "file_page": "https://commons.wikimedia.org/wiki/File:MountainSuckerYNP.jpg", "height": 205, "license": "Public domain", "license_url": null, "thumb": "thumbs/mountain-sucker.jpg", "width": 320}, "Myriophyllum spicatum": {"thumb": "thumbs/myriophyllum-spicatum.jpg", "width": 320, "height": 213, "artist": "Donald Hobern from Copenhagen, Denmark", "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "file_page": "https://commons.wikimedia.org/wiki/File:Myriophyllum_spicatum_(7914508418).jpg", "note": null}, "Neogale frenata": {"artist": "(c) benjchristensen, some rights reserved (CC BY)", "file_page": "https://commons.wikimedia.org/wiki/File:Long-tailed_Weasel,_Sonoma_County,_US-CA,_US_imported_from_iNaturalist_photo_108909271.jpg", "height": 320, "license": "CC BY 4.0", "license_url": "https://creativecommons.org/licenses/by/4.0", "thumb": "thumbs/neogale-frenata.jpg", "width": 213}, "Neotamias": {"thumb": "thumbs/neotamias.jpg", "width": 320, "height": 244, "artist": "Linda Tanner", "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "file_page": "https://commons.wikimedia.org/wiki/File:Lodgepole_Chipmunk_(Neotamias_speciosus).jpg", "note": null}, "Odocoileus hemionus": {"artist": "Oregon Department of Fish & Wildlife", "file_page": "https://commons.wikimedia.org/wiki/File:Mule_buck_elk_creek_m_myatt_(5489214303).jpg", "height": 229, "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "thumb": "thumbs/odocoileus-hemionus.jpg", "width": 320}, "Oncorhynchus mykiss": {"artist": "Engbretson Eric, U.S. Fish and Wildlife Service", "file_page": "https://commons.wikimedia.org/wiki/File:Close_up_of_rainbow_trout_fish_underwater_oncorhynchus_mykiss.jpg", "height": 229, "license": "Public domain", "license_url": null, "thumb": "thumbs/oncorhynchus-mykiss.jpg", "width": 320}, "Oreortyx pictus": {"artist": "U.S. Fish & Wildlife Service - Pacific Region's", "file_page": "https://commons.wikimedia.org/wiki/File:Oreortyx_pictus.jpg", "height": 260, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/oreortyx-pictus.jpg", "width": 241}, "Otospermophilus beecheyi": {"artist": "Holly Cheng", "file_page": "https://commons.wikimedia.org/wiki/File:CA_Ground_Squirrel_on_rock.jpg", "height": 240, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/otospermophilus-beecheyi.jpg", "width": 320}, "Paiute sculpin": {"artist": "{{{1}}}", "file_page": "https://commons.wikimedia.org/wiki/File:Cottus_beldingii_IMG_5988.jpg", "height": 216, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/paiute-sculpin.jpg", "width": 320}, "Pandion haliaetus": {"artist": "Chuck Homler / Focus On Wildlife", "file_page": "https://commons.wikimedia.org/wiki/File:Osprey_Perched_Snag_Heislerville.jpg", "height": 213, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/pandion-haliaetus.jpg", "width": 320}, "Pedicularis groenlandica": {"artist": "Patrick Alexander from Las Cruces, NM", "file_page": "https://commons.wikimedia.org/wiki/File:Pedicularis_groenlandica_-_Flickr_-_aspidoscelis_(1).jpg", "height": 320, "license": "CC0", "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en", "thumb": "thumbs/pedicularis-groenlandica.jpg", "width": 180}, "Penstemon newberryi": {"artist": "Stan Shebs", "file_page": "https://commons.wikimedia.org/wiki/File:Penstemon_newberryi_2.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/penstemon-newberryi.jpg", "width": 310}, "Periphyton": {"thumb": "thumbs/periphyton.jpg", "width": 320, "height": 240, "artist": "NOAA Great Lakes Environmental Research Laboratory (credit: National Park Service)", "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "file_page": "https://commons.wikimedia.org/wiki/File:Cladophora_and_zebra_mussels_(8741972684).jpg", "note": "Photo is from Lake Michigan. The shells are zebra mussels, which are not in Lake Tahoe."}, "Phlox diffusa": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Phlox_diffusa_22156.JPG", "height": 240, "license": "CC BY 2.5", "license_url": "https://creativecommons.org/licenses/by/2.5", "thumb": "thumbs/phlox-diffusa.jpg", "width": 320}, "Phyllodoce breweri": {"artist": "Merrie Freed", "file_page": "https://commons.wikimedia.org/wiki/File:Phyllodocebreweri.jpg", "height": 320, "license": "Public domain", "license_url": null, "thumb": "thumbs/phyllodoce-breweri.jpg", "width": 240}, "Phytoplankton": {"artist": "University of Rhode Island/Stephanie Anderson", "file_page": "https://commons.wikimedia.org/wiki/File:Mixed_phytoplankton_community_2.png", "height": 240, "license": "Public domain", "license_url": null, "thumb": "thumbs/phytoplankton.jpg", "width": 320}, "Picoides arcticus": {"artist": "U.S. Fish and Wildlife Service Northeast Region", "file_page": "https://commons.wikimedia.org/wiki/File:Picoides_arcticus_-Brunswick,_Vermont,_USA_-male-8.jpg", "height": 320, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/picoides-arcticus.jpg", "width": 213}, "Pinus albicaulis": {"artist": "Richard Sniezko, US Forest Service", "file_page": "https://commons.wikimedia.org/wiki/File:Whitebark_pine_group.jpg", "height": 240, "license": "Public domain", "license_url": null, "thumb": "thumbs/pinus-albicaulis.jpg", "width": 320}, "Pinus contorta": {"thumb": "thumbs/pinus-contorta.jpg", "width": 240, "height": 320, "artist": "Famartin", "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "file_page": "https://commons.wikimedia.org/wiki/File:2015-10-31_10_22_33_A_large_Sierra_Lodgepole_Pine_along_the_Mount_Rose_Trail_about_3.3_miles_northwest_of_Mount_Rose_Summit,_Nevada.jpg", "note": null}, "Pinus lambertiana": {"artist": "Willmcw", "file_page": "https://commons.wikimedia.org/wiki/File:Sugar_Pine.jpg", "height": 320, "license": "Public domain", "license_url": null, "thumb": "thumbs/pinus-lambertiana.jpg", "width": 177}, "Pinus monticola": {"artist": "Chris Schnepf, University of Idaho, USA", "file_page": "https://commons.wikimedia.org/wiki/File:Pinus_monticola_Idaho3.jpg", "height": 320, "license": "CC BY 3.0 us", "license_url": "https://creativecommons.org/licenses/by/3.0/us/deed.en", "thumb": "thumbs/pinus-monticola.jpg", "width": 213}, "Populus trichocarpa": {"artist": null, "file_page": "https://commons.wikimedia.org/wiki/File:Populus_trichocarpa_05897.JPG", "height": 320, "license": "CC BY 2.5", "license_url": "https://creativecommons.org/licenses/by/2.5", "thumb": "thumbs/populus-trichocarpa.jpg", "width": 240}, "Potamogeton crispus": {"artist": null, "file_page": "https://commons.wikimedia.org/wiki/File:PotamogetonCrispus.jpg", "height": 250, "license": "CC BY-SA 3.0", "license_url": "http://creativecommons.org/licenses/by-sa/3.0/", "thumb": "thumbs/potamogeton-crispus.jpg", "width": 320}, "Potamopyrgus antipodarum": {"artist": "Michal Maňas", "file_page": "https://commons.wikimedia.org/wiki/File:Potamopyrgus_antipodarum_2.png", "height": 179, "license": "CC BY 4.0", "license_url": "https://creativecommons.org/licenses/by/4.0", "thumb": "thumbs/potamopyrgus-antipodarum.jpg", "width": 320}, "Procyon lotor": {"artist": "Rhododendrites", "file_page": "https://commons.wikimedia.org/wiki/File:Raccoon_in_Central_Park_(35264).jpg", "height": 250, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/procyon-lotor.jpg", "width": 320}, "Prosopium williamsoni": {"artist": "Woostermike at English Wikipedia", "file_page": "https://commons.wikimedia.org/wiki/File:Prosopium_williamsoni.jpg", "height": 240, "license": "Public domain", "license_url": null, "thumb": "thumbs/prosopium-williamsoni.jpg", "width": 320}, "Pseudacris sierra": {"artist": "Pacific Southwest Region 5", "file_page": "https://commons.wikimedia.org/wiki/File:180202-FS-Plumas-TH-001_(26674733767).jpg", "height": 251, "license": "Public domain", "license_url": null, "thumb": "thumbs/pseudacris-sierra.jpg", "width": 320}, "Puma concolor": {"artist": "National Park Service", "file_page": "https://commons.wikimedia.org/wiki/File:Mountain_Lion_in_Glacier_National_Park.jpg", "height": 213, "license": "Public domain", "license_url": null, "thumb": "thumbs/puma-concolor.jpg", "width": 320}, "Purshia tridentata": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Purshia_tridentata_9732.JPG", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/purshia-tridentata.jpg", "width": 213}, "Quercus vacciniifolia": {"artist": "Stan Shebs", "file_page": "https://commons.wikimedia.org/wiki/File:Quercus_vaccinifolia_1.jpg", "height": 238, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/quercus-vacciniifolia.jpg", "width": 320}, "Rhododendron columbianum": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Ledum_glandulosum_7486.JPG", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/rhododendron-columbianum.jpg", "width": 213}, "Ribes nevadense": {"artist": "Canbyacontributor", "file_page": "https://commons.wikimedia.org/wiki/File:Ribes_nevadense.jpg", "height": 320, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/ribes-nevadense.jpg", "width": 320}, "Rubus parviflorus": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Rubus_parviflorus_9481.JPG", "height": 213, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/rubus-parviflorus.jpg", "width": 320}, "Salix lemmonii": {"artist": null, "file_page": "https://commons.wikimedia.org/wiki/File:Salix_lemmonii(01).jpg", "height": 252, "license": "Public domain", "license_url": null, "thumb": "thumbs/salix-lemmonii.jpg", "width": 320}, "Salmo trutta": {"artist": "USFWS Mountain Prairie", "file_page": "https://commons.wikimedia.org/wiki/File:Brown_Trout_(Salmo_trutta)_(53678765394).jpg", "height": 111, "license": "Public domain", "license_url": null, "thumb": "thumbs/salmo-trutta.jpg", "width": 320}, "Salvelinus fontinalis": {"artist": "Jay Fleming (US Nat'l Park Svc)", "file_page": "https://commons.wikimedia.org/wiki/File:Brook_trout_in_water.jpg", "height": 180, "license": "Public domain", "license_url": null, "thumb": "thumbs/salvelinus-fontinalis.jpg", "width": 320}, "Sceloporus graciosus": {"artist": "Geographer (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Sceloporus_graciosus_az.jpg", "height": 320, "license": "CC BY 2.5", "license_url": "https://creativecommons.org/licenses/by/2.5", "thumb": "thumbs/sceloporus-graciosus.jpg", "width": 308}, "Selasphorus calliope": {"artist": "Dan Pancamo", "file_page": "https://commons.wikimedia.org/wiki/File:Calliope_Hummingbird_by_Dan_Pancamo.jpg", "height": 213, "license": "CC BY-SA 2.0", "license_url": "https://creativecommons.org/licenses/by-sa/2.0", "thumb": "thumbs/selasphorus-calliope.jpg", "width": 320}, "Sierra Nevada red fox": {"artist": "Keith Slausen USFS/PSW", "file_page": "https://commons.wikimedia.org/wiki/File:Sierra_Nevada_Red_Fox,_Lassen_Volcanic_National_Park-_Keith_Slausen_USFS_2002.jpg", "height": 276, "license": "Public domain", "license_url": null, "thumb": "thumbs/sierra-nevada-red-fox.jpg", "width": 320}, "Sitta canadensis": {"artist": "Becky Matsubara from El Sobrante, California", "file_page": "https://commons.wikimedia.org/wiki/File:Red-breasted_Nuthatch_(48859254972).jpg", "height": 213, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/sitta-canadensis.jpg", "width": 320}, "Speckled dace": {"artist": "USFWS - Pacific Region", "file_page": "https://commons.wikimedia.org/wiki/File:Speckled_Dace.jpg", "height": 200, "license": "Public domain", "license_url": null, "thumb": "thumbs/speckled-dace.jpg", "width": 320}, "Stygobromus": {"artist": "Irina Sereg/NPS", "file_page": "https://commons.wikimedia.org/wiki/File:Kenk%27s_amphipod.jpg", "height": 150, "license": "Public domain", "license_url": null, "thumb": "thumbs/stygobromus.jpg", "width": 200}, "Tahoe sucker": {"artist": "US Forest Service", "file_page": "https://commons.wikimedia.org/wiki/File:Catostomus_tahoensis.jpg", "height": 120, "license": "Public domain", "license_url": null, "thumb": "thumbs/tahoe-sucker.jpg", "width": 320}, "Tamiasciurus douglasii": {"artist": "VJAnderson", "file_page": "https://commons.wikimedia.org/wiki/File:Douglas_Squirrel_DSC3742vvc.jpg", "height": 229, "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "thumb": "thumbs/tamiasciurus-douglasii.jpg", "width": 320}, "Thamnophis couchii": {"artist": "Trace Fleeman Garcia", "file_page": "https://commons.wikimedia.org/wiki/File:Sierra_garter_snake_handled.jpg", "height": 320, "license": "CC0", "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en", "thumb": "thumbs/thamnophis-couchii.jpg", "width": 240}, "Thamnophis elegans": {"artist": "Steve Jurvetson from Menlo Park, USA", "file_page": "https://commons.wikimedia.org/wiki/File:Coast_Garter_Snake.jpg", "height": 240, "license": "CC BY 2.0", "license_url": "https://creativecommons.org/licenses/by/2.0", "thumb": "thumbs/thamnophis-elegans.jpg", "width": 320}, "Tsuga mertensiana": {"artist": "Walter Siegmund (talk)", "file_page": "https://commons.wikimedia.org/wiki/File:Tsuga_mertensiana_0261.JPG", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/tsuga-mertensiana.jpg", "width": 213}, "Urocitellus beldingi": {"artist": "Yathin S Krishnappa", "file_page": "https://commons.wikimedia.org/wiki/File:2009-Beldings-Ground-Squirrel.jpg", "height": 242, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/urocitellus-beldingi.jpg", "width": 320}, "Veratrum californicum": {"artist": "JerryFriedman", "file_page": "https://commons.wikimedia.org/wiki/File:Veratrum_californicum_habitus1.jpg", "height": 320, "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "thumb": "thumbs/veratrum-californicum.jpg", "width": 215}, "Western pearlshell": {"artist": "USFWS Pacific Southwest Region from Sacramento, US", "file_page": "https://commons.wikimedia.org/wiki/File:Tagged_western_pearlshell_mussel_(49305300613).jpg", "height": 320, "license": "Public domain", "license_url": null, "thumb": "thumbs/western-pearlshell.jpg", "width": 240}, "Yellow-bellied marmot": {"thumb": "thumbs/yellow-bellied-marmot.jpg", "width": 320, "height": 200, "artist": "Diliff", "license": "CC BY-SA 3.0", "license_url": "https://creativecommons.org/licenses/by-sa/3.0", "file_page": "https://commons.wikimedia.org/wiki/File:Marmota_flaviventris_(Yellow_Bellied_Marmot),_Yosemite_NP_-_Diliff.jpg", "note": null}, "American yellow warbler": {"thumb": "thumbs/american-yellow-warbler.jpg", "width": 320, "height": 240, "artist": "Rhododendrites", "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "file_page": "https://commons.wikimedia.org/wiki/File:Yellow_warbler_(82905).jpg", "note": null}, "Tui chub": {"thumb": "thumbs/tui-chub.jpg", "width": 320, "height": 180, "artist": "USFWS Pacific Southwest Region", "license": "Public domain (US federal work)", "license_url": null, "file_page": "https://commons.wikimedia.org/wiki/File:Fish_Lake_Valley_tui_chub_(53704033099).jpg", "note": "Photo shows the Fish Lake Valley tui chub, a related form; no openly licensed photo of the Lahontan form was found."}};
+// THUMBS:END
+const wikiUrl = sp => "https://en.wikipedia.org/wiki/" + encodeURIComponent((WIKI[sp[1]] || sp[2]).replace(/ /g, "_"));
+// Name rendered as a link that opens Wikipedia in a new tab
+const wikiName = sp => '<a class="wl" href="' + wikiUrl(sp) + '" target="_blank" rel="noopener noreferrer" title="Open on Wikipedia">' + esc(sp[1]) + '</a>';
+
+const state = {group:null, status:null, q:""};
+const STATUS_FILTERS = [
+  ["native","Native", s => !s.includes("introduced") && !s.includes("invasive")],
+  ["endemic","Endemic", s => s.includes("endemic")],
+  ["listed","Protected", s => s.includes("listed")],
+  ["nonnative","Introduced or invasive", s => s.includes("introduced") || s.includes("invasive")]
+];
+const $ = id => document.getElementById(id);
+const esc = t => t.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function matches(sp){
+  const st = sp[3].split(",");
+  if (state.group !== null && sp[0] !== state.group) return false;
+  if (state.status){ const f = STATUS_FILTERS.find(x => x[0] === state.status); if (!f[2](st)) return false; }
+  if (state.q){ const hay = (sp[1] + " " + sp[2] + " " + sp[5]).toLowerCase(); if (!hay.includes(state.q)) return false; }
+  return true;
+}
+
+function render(){
+  const shown = S.filter(matches);
+  let html = "";
+  GROUPS.forEach((g, gi) => {
+    const rows = shown.filter(sp => sp[0] === gi);
+    if (!rows.length) return;
+    html += '<div><div class="group-head"><h2>' + g + '</h2><span>' + rows.length + '</span></div><div class="grid">';
+    rows.forEach(sp => {
+      const tags = sp[3].split(",").map(s => '<span class="tag t-' + s + '">' + SLABEL[s] + '</span>').join("");
+      const zs = sp[4].split("").map(z => ZNAME[z]).join(" · ");
+      const pid = PLATE_OF[sp[1]], ph = PAINTED[sp[1]];
+      // Commons thumbnail only for entries without a painted plate
+      const tn = ph ? null : THUMBS[WIKI[sp[1]] || sp[2]];
+      html += '<article class="sp">' + (ph ? '<div class="thumb photo"><img loading="lazy" src="' + ph + '" alt="Painted plate of ' + esc(sp[1]) + '"></div>' : pid ? '<div class="thumb">' + art(sp[1], pid) + '</div>' : '') + '<div class="head">' + (tn ? '<img class="tn" loading="lazy" src="' + tn.thumb + '" width="' + tn.width + '" height="' + tn.height + '" alt="Photo of ' + esc(sp[1]) + '">' : '') + '<div><div class="nm">' + wikiName(sp) + '</div><div class="sci">' + esc(sp[2]) + '</div></div></div>' +
+        '<div class="meta">' + tags + '</div><div class="note">' + esc(sp[5]) + '</div><div class="zs">' + zs + '</div>' + (tn ? '<div class="cr">Photo: <a href="' + tn.file_page + '" target="_blank" rel="noopener noreferrer">' + esc(tn.artist || "Unknown") + '</a> · ' + (tn.license_url ? '<a href="' + tn.license_url + '" target="_blank" rel="noopener noreferrer">' + esc(tn.license) + '</a>' : esc(tn.license)) + (tn.note ? '<br>' + esc(tn.note) : '') + '</div>' : '') + '</article>';
+    });
+    html += "</div></div>";
+  });
+  $("list").innerHTML = html || '<p class="empty">No entries match. Clear a filter or change the search.</p>';
+  $("count").textContent = shown.length + " of " + S.length + " entries";
+  document.querySelectorAll("#groups .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.g === String(state.group))));
+  document.querySelectorAll("#statuses .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.s === String(state.status))));
+}
+
+// Static color key under the diagram
+$("zones").innerHTML = ZONES.map(z =>
+  '<li><span class="sw" style="background:var(' + z[3] + ')"></span><span><span class="zn">' + z[1] + '</span><span class="zr">' + z[2] + '</span></span></li>'
+).join("");
+
+$("groups").insertAdjacentHTML("beforeend",
+  '<button class="chip" type="button" data-g="null">All</button>' +
+  GROUPS.map((g, i) => '<button class="chip" type="button" data-g="' + i + '">' + g + '</button>').join(""));
+$("groups").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state.group = b.dataset.g === "null" ? null : Number(b.dataset.g); render(); });
+
+$("statuses").insertAdjacentHTML("beforeend",
+  '<button class="chip" type="button" data-s="null">All</button>' +
+  STATUS_FILTERS.map(f => '<button class="chip" type="button" data-s="' + f[0] + '">' + f[1] + '</button>').join(""));
+$("statuses").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state.status = b.dataset.s === "null" ? null : b.dataset.s; render(); });
+
+// Plate numbers follow the order of the PLATES list, so a species keeps its number
+// whether it is shown as a painting or as a sketch.
+const NUM = Object.fromEntries(PLATES.map(([name], i) => [name, roman(i + 1)]));
+const captionOf = (name, sp) => {
+  const tags = sp[3].split(",").map(t => '<span class="tag t-' + t + '">' + SLABEL[t] + '</span>').join("");
+  const zs = sp[4].split("").map(z => ZNAME[z]).join(" · ");
+  return '<span class="pn">Plate ' + NUM[name] + '</span><span class="cn">' + wikiName(sp) + '</span><span class="sn">' + esc(sp[2]) + '</span>' +
+    '<span class="meta">' + tags + '</span><span class="zs">' + zs + '</span>';
+};
+
+$("painted").innerHTML = Object.entries(PAINTED).sort((a, b) => PLATES.findIndex(p => p[0] === a[0]) - PLATES.findIndex(p => p[0] === b[0])).map(([name, src]) => {
+  const sp = S.find(x => x[1] === name);
+  const wide = WIDE.has(name) ? " wide" : "";
+  return '<figure class="pp' + wide + '"><img loading="lazy" src="' + src + '" alt="Painted plate of ' + esc(name) + '">' + captionOf(name, sp) + '</figure>';
+}).join("");
+
+// Hide the sketch section once every species has a painted plate
+$("plates").closest("section").hidden = SKETCHES.length === 0;
+$("plates").innerHTML = SKETCHES.map(([name, id]) => {
+  const sp = S.find(x => x[1] === name);
+  return '<figure class="plate">' + art(name, id) + captionOf(name, sp) + '</figure>';
+}).join("");
+
+$("q").addEventListener("input", e => { state.q = e.target.value.trim().toLowerCase(); render(); });
+render();
+</script>
