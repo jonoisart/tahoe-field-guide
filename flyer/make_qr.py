@@ -6,7 +6,7 @@ from pathlib import Path
 import cv2, numpy as np
 from reportlab.graphics.barcode import qrencoder as q
 
-URL = sys.argv[1] if len(sys.argv) > 1 else "https://jonoisart.com/tahoe-field-guide"
+URL = sys.argv[1] if len(sys.argv) > 1 else "https://research.jonoisart.com/tahoe-field-guide/"
 
 # Smallest QR version that fits at error level Q (tolerant of print wear)
 for v in range(2, 15):

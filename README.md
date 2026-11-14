@@ -8,7 +8,7 @@ A searchable field guide to 143 plants and animals of Lake Tahoe and its watersh
 
 A one-page printable flyer with a QR code lives in `flyer/`.
 
-Live at **[research.jonoisart.com/tahoe-field-guide](https://research.jonoisart.com/tahoe-field-guide/)**. The flyer's QR code points to `jonoisart.com/tahoe-field-guide`, which redirects there.
+Live at **[research.jonoisart.com/tahoe-field-guide](https://research.jonoisart.com/tahoe-field-guide/)**. The flyer's QR code points there directly.
 
 ## Layout
 
@@ -34,7 +34,7 @@ python3 scripts/thumbs_inject.py path/to/manifest.json
 python3 scripts/build_index.py
 
 # rebuild the flyer (needs Playwright + Chromium; QR needs reportlab + opencv-python)
-python3 flyer/make_qr.py https://jonoisart.com/tahoe-field-guide
+python3 flyer/make_qr.py https://research.jonoisart.com/tahoe-field-guide/
 python3 flyer/build.py   # writes flyer/flyer.html; print it to PDF at 8.5x11 in, no margins
 ```
 

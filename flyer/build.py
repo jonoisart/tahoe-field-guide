@@ -108,8 +108,8 @@ footer {{ margin-top:auto; font-size:7.2pt; color:var(--sepia); text-align:cente
   <div class="qr">{qr}</div>
   <div class="scan">
     <h3>Scan to carry the guide on your hike</h3>
-    <p>Free in any phone browser, no app. Search 143 species by name, group or status.</p>
-    <p class="url">jonoisart.com/tahoe-field-guide</p>
+    <p>Free in any phone browser, no app.</p>
+    <p class="url">research.jonoisart.com/<br><span style="white-space:nowrap">tahoe-field-guide</span></p>
     <p><b>Open it at the trailhead.</b> Signal is spotty on many trails.</p>
   </div>
   <div class="trail">
