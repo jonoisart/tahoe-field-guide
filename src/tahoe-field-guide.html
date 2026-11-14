@@ -73,13 +73,8 @@ header{display:flex;flex-direction:column;gap:14px}
 figure{margin:0}
 .tick{font-family:var(--mono);font-size:10.5px;fill:var(--muted)}
 .lab{font-family:var(--mono);font-size:10.5px;fill:var(--ink)}
-.keyh{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.key{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px}
-.key li{display:grid;grid-template-columns:12px minmax(0,1fr);gap:8px;align-items:start;font-size:.86rem;line-height:1.25}
-.key .sw{width:12px;height:12px;border-radius:2px;margin-top:2px}
-.key .zn{font-weight:600}
-.key .zr{display:block;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
-.keynote{font-size:.78rem;color:var(--muted);margin-top:10px}
+.zn{font-family:var(--body);font-size:9.5px;font-weight:600;fill:var(--ink)}
+.zn.zw{fill:var(--on-water)}
 button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* controls */
@@ -502,7 +497,7 @@ footer li{break-inside:avoid;margin-bottom:4px}
 
 <section class="transect" aria-label="Elevation zones">
   <figure>
-    <svg id="tsvg" viewBox="0 0 380 450" role="img" aria-label="Cross section of the Tahoe Basin from the lake floor at 4,580 feet to Freel Peak at 10,881 feet, with habitat zones as colored bands">
+    <svg id="tsvg" viewBox="-34 0 414 450" role="img" aria-label="Cross section of the Tahoe Basin from the lake floor at 4,580 feet to Freel Peak at 10,881 feet, with habitat zones as colored bands">
       <defs>
         <clipPath id="land"><path d="M58,250 L96,316.6 C110,380 130,418.8 160,418.8 C195,418.8 215,370 232,316.6 L256,313 L330,27.4 L352,70 L380,110 L380,450 L58,450 Z"/></clipPath>
         <clipPath id="water"><path d="M96,316.6 C110,380 130,418.8 160,418.8 C195,418.8 215,370 232,316.6 Z"/></clipPath>
@@ -525,19 +520,24 @@ footer li{break-inside:avoid;margin-bottom:4px}
       </g>
       <path d="M58,10V440" stroke="var(--muted)" stroke-width="1" fill="none"/>
       <g class="tick" text-anchor="end">
-        <text x="52" y="31">10,881</text><text x="52" y="86">10,000</text><text x="52" y="210">8,000</text><text x="52" y="320">6,225</text><text x="52" y="422">4,580</text>
-        <text x="52" y="446">ft</text>
+        <text x="52" y="31">10,881 ft</text><text x="52" y="86">10,000 ft</text><text x="52" y="210">8,000 ft</text><text x="52" y="320">6,225 ft</text><text x="52" y="422">4,580 ft</text>
       </g>
       <text class="lab" x="330" y="17" text-anchor="middle">Freel Peak</text>
-      <text x="165" y="388" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--on-water)">1,645 ft deep</text>
+      <text x="165" y="397" text-anchor="middle" font-family="var(--mono)" font-size="9" fill="var(--on-water)">1,645 ft deep</text>
+      <!-- Zone names: land zones under the elevation labels, water zones in or beside the lake -->
+      <g class="zl">
+        <text class="zn" x="52" y="44" text-anchor="end">Alpine</text>
+        <text class="zn" x="52" y="99" text-anchor="end">Subalpine</text>
+        <text class="zn" x="52" y="223" text-anchor="end">Montane forest</text>
+        <text class="zn zw" x="165" y="334" text-anchor="middle">Open water</text>
+        <text class="zn zw" x="165" y="383" text-anchor="middle">Deep lake</text>
+        <path d="M244,315 L256,331 M224,338 L256,368" stroke="var(--ink)" stroke-width=".7" fill="none"/>
+        <text class="zn" x="259" y="335">Shore, marsh,</text><text class="zn" x="259" y="346">meadow &amp; stream</text>
+        <text class="zn" x="259" y="372">Nearshore</text><text class="zn" x="259" y="383">shallows</text>
+      </g>
     </svg>
-    <figcaption>Vertical scale is true. Horizontal is compressed: the lake is 22 miles long. The lake floor sits about 100 ft lower than Carson City.</figcaption>
+    <figcaption>Vertical scale is true. Horizontal is compressed: the lake is 22 miles long. The lake floor sits about 100 ft lower than Carson City. Zone boundaries are approximate and shift with slope and aspect.</figcaption>
   </figure>
-  <div>
-    <h2 class="keyh">Habitat zones</h2>
-    <ul class="key" id="zones"></ul>
-    <p class="keynote">Boundaries are approximate and shift with slope and aspect.</p>
-  </div>
 </section>
 
 <section>
@@ -901,10 +901,6 @@ function render(){
   document.querySelectorAll("#statuses .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.s === String(state.status))));
 }
 
-// Static color key under the diagram
-$("zones").innerHTML = ZONES.map(z =>
-  '<li><span class="sw" style="background:var(' + z[3] + ')"></span><span><span class="zn">' + z[1] + '</span><span class="zr">' + z[2] + '</span></span></li>'
-).join("");
 
 $("groups").insertAdjacentHTML("beforeend",
   '<button class="chip" type="button" data-g="null">All</button>' +

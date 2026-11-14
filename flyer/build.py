@@ -4,7 +4,9 @@ here = os.path.dirname(os.path.abspath(__file__))
 page = open(os.path.join(here, "..", "src", "tahoe-field-guide.html")).read()
 
 # Reuse the habitat cross-section from the guide, with print-safe literal colors
-svg = re.search(r'<svg id="tsvg".*?</svg>', page, re.S).group(0)
+# The flyer uses its own frozen copy of the cross-section (the web page labels zones
+# on the chart; the flyer has a separate key), so page edits don't change the print layout.
+svg = open(os.path.join(here, "transect.svg")).read()
 COL = {"--z-alpine": "#c3cad0", "--z-sub": "#93aa90", "--z-mont": "#4c7855", "--z-wet": "#b59a3c",
        "--z-near": "#63b6c9", "--z-open": "#2c80b6", "--z-deep": "#113c66",
        "--rock": "#e6e0d4",          # light ground fill to save ink
