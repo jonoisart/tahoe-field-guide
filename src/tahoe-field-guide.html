@@ -155,6 +155,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pp .pn{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
 .pp .cn{font-size:1.1rem;line-height:1.15}
 .pp .meta{justify-content:center}
+/* Caption rows: items sit side by side, wrapping only when the column is too narrow */
+.cr1,.cr2{display:flex;flex-wrap:wrap;justify-content:center;column-gap:8px;row-gap:2px}
+.cr1{align-items:baseline}
+.cr2{align-items:center}
 .pp .zs{font-family:var(--mono);font-size:.7rem;opacity:.8}
 .pp .sn{font-style:italic;font-size:.9rem;opacity:.8}
 .pp.wide{grid-column:span 2}
@@ -918,8 +922,10 @@ const NUM = Object.fromEntries(PLATES.map(([name], i) => [name, roman(i + 1)]));
 const captionOf = (name, sp) => {
   const tags = sp[3].split(",").map(t => '<span class="tag t-' + t + '">' + SLABEL[t] + '</span>').join("");
   const zs = sp[4].split("").map(z => ZNAME[z]).join(" · ");
-  return '<span class="pn">Plate ' + NUM[name] + '</span><span class="cn"><a class="jl" href="#e-' + slug(name) + '" data-jump="' + esc(name) + '">' + esc(name) + '</a></span><span class="sn">' + esc(sp[2]) + '</span>' +
-    '<span class="meta">' + tags + '</span><span class="zs">' + zs + '</span>';
+  // Row 1: plate number + scientific name. Row 2: common name. Row 3: status tags + zones.
+  return '<span class="cr1"><span class="pn">Plate ' + NUM[name] + '</span><span class="sn">' + esc(sp[2]) + '</span></span>' +
+    '<span class="cn"><a class="jl" href="#e-' + slug(name) + '" data-jump="' + esc(name) + '">' + esc(name) + '</a></span>' +
+    '<span class="cr2"><span class="meta">' + tags + '</span><span class="zs">' + zs + '</span></span>';
 };
 
 $("painted").innerHTML = Object.entries(PAINTED).sort((a, b) => PLATES.findIndex(p => p[0] === a[0]) - PLATES.findIndex(p => p[0] === b[0])).map(([name, src]) => {
