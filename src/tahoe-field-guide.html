@@ -97,7 +97,22 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .group-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
 .group-head span{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:10px}
-.sp{background:var(--surface);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.sp{background:var(--surface);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:5px;min-width:0;scroll-margin-top:var(--controls-h,160px)}
+.sp.flash{animation:flash 1.8s ease-out}
+@keyframes flash{0%,40%{box-shadow:0 0 0 2px var(--accent)}100%{box-shadow:0 0 0 2px transparent}}
+/* Jump-to-guide banner: slides down once the page title has scrolled away */
+.jump{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:center;
+  padding-top:calc(env(safe-area-inset-top,0px) + 8px);padding-bottom:8px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);transform:translateY(-110%);transition:transform .25s ease;pointer-events:none}
+.jump.show{transform:none;pointer-events:auto}
+.jump button{font:inherit;font-size:.86rem;font-weight:500;color:var(--accent);background:transparent;border:0;padding:4px 10px;border-radius:999px;cursor:pointer}
+.jump button:hover{text-decoration:underline;text-underline-offset:3px}
+/* Plate image and name jump to the guide entry */
+.jl{color:inherit;text-decoration:underline;text-decoration-color:var(--paper-edge);text-underline-offset:3px;text-decoration-thickness:1px}
+.jl:hover{text-decoration-color:var(--plate-ink)}
+.pp a.pimg{display:block;cursor:pointer;border-radius:1px}
 .sp .nm{font-weight:600;font-size:1rem;line-height:1.25}
 .wl{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;text-decoration-thickness:1px}
 .wl:hover{color:var(--accent);text-decoration-color:var(--accent)}
@@ -143,7 +158,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .sp .tn{flex:0 0 72px;width:72px;height:72px;object-fit:contain;background:var(--bg);border-radius:4px}
 .sp .cr{font-size:.72rem;color:var(--muted);overflow-wrap:anywhere}
 .sp .cr a{color:inherit}
-.thumb.photo img{display:block;width:100%;max-height:300px;object-fit:contain}
+.thumb.photo img{display:block;width:100%;height:auto;max-height:300px;object-fit:contain}
 .sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 
 /* notes */
@@ -155,6 +170,7 @@ footer{font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;ga
 footer ul{margin:0;padding-left:18px;columns:2 320px;column-gap:32px}
 footer li{break-inside:avoid;margin-bottom:4px}
 @media (max-width:760px){.row .lbl{width:100%}}
+@media (prefers-reduced-motion:reduce){.jump{transition:none}.sp.flash{animation:none;box-shadow:0 0 0 2px var(--accent)}}
 @media (max-width:360px){.key{grid-template-columns:minmax(0,1fr)}}
 </style>
 
@@ -458,6 +474,8 @@ footer li{break-inside:avoid;margin-bottom:4px}
 </g></symbol>
 </defs></svg>
 
+<div class="jump" id="jump" aria-hidden="true"><button type="button" tabindex="-1">Jump to the Field Guide ↓</button></div>
+
 <div class="wrap">
 <header>
   <h1>Tahoe Basin Field Guide</h1>
@@ -528,7 +546,7 @@ footer li{break-inside:avoid;margin-bottom:4px}
   <div class="plates" id="plates"></div>
 </section>
 
-<section>
+<section id="guide">
   <div class="controls">
     <div class="row">
       <input id="q" type="search" placeholder="Search by name, e.g. kokanee or Pinus" aria-label="Search species">
@@ -783,6 +801,9 @@ const PAINTED = {
   "Mysis shrimp": "img/mysis-shrimp.jpg",
   "Mountain big sagebrush": "img/sagebrush.jpg"
 };
+// Pixel size of each plate image, so the browser reserves space before it loads
+const PDIM = {"img/jeffrey-pine.jpg": [1045, 1400], "img/quaking-aspen.jpg": [1400, 782], "img/snow-plant.jpg": [1045, 1400], "img/yellow-cress.jpg": [1400, 1045], "img/mules-ears.jpg": [1045, 1400], "img/lupine.jpg": [1045, 1400], "img/columbine.jpg": [1045, 1400], "img/black-bear.jpg": [1045, 1400], "img/pacific-marten.jpg": [1045, 1400], "img/pika.jpg": [1045, 1400], "img/bald-eagle.jpg": [1045, 1400], "img/stellers-jay.jpg": [1045, 1400], "img/chickadee.jpg": [1045, 1400], "img/nutcracker.jpg": [1045, 1400], "img/woodpecker.jpg": [1045, 1400], "img/western-tanager.jpg": [1045, 1400], "img/mountain-bluebird.jpg": [1045, 1400], "img/lahontan-cutthroat.jpg": [1045, 1400], "img/kokanee.jpg": [1400, 1045], "img/lake-trout.jpg": [1400, 764], "img/yellow-legged-frog.jpg": [1400, 764], "img/fence-lizard.jpg": [1045, 1400], "img/signal-crayfish.jpg": [1045, 1400], "img/mysis-shrimp.jpg": [1400, 764], "img/sagebrush.jpg": [1045, 1400]};
+const dimAttr = src => PDIM[src] ? ' width="' + PDIM[src][0] + '" height="' + PDIM[src][1] + '"' : '';
 // Landscape plates span two columns on wide screens
 const WIDE = new Set(["Quaking aspen", "Tahoe yellow cress", "Kokanee salmon", "Lake trout (mackinaw)", "Sierra Nevada yellow-legged frog", "Mysis shrimp"]);
 const SKETCHES = PLATES.filter(([name]) => !PAINTED[name]);
@@ -834,6 +855,8 @@ const STATUS_FILTERS = [
   ["nonnative","Introduced or invasive", s => s.includes("introduced") || s.includes("invasive")]
 ];
 const $ = id => document.getElementById(id);
+// URL-safe id for an entry, e.g. "Steller's jay" -> "steller-s-jay"
+const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const esc = t => t.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function matches(sp){
@@ -857,7 +880,7 @@ function render(){
       const pid = PLATE_OF[sp[1]], ph = PAINTED[sp[1]];
       // Commons thumbnail only for entries without a painted plate
       const tn = ph ? null : THUMBS[WIKI[sp[1]] || sp[2]];
-      html += '<article class="sp">' + (ph ? '<div class="thumb photo"><img loading="lazy" src="' + ph + '" alt="Painted plate of ' + esc(sp[1]) + '"></div>' : pid ? '<div class="thumb">' + art(sp[1], pid) + '</div>' : '') + '<div class="head">' + (tn ? '<img class="tn" loading="lazy" src="' + tn.thumb + '" width="' + tn.width + '" height="' + tn.height + '" alt="Photo of ' + esc(sp[1]) + '">' : '') + '<div><div class="nm">' + wikiName(sp) + '</div><div class="sci">' + esc(sp[2]) + '</div></div></div>' +
+      html += '<article class="sp" id="e-' + slug(sp[1]) + '">' + (ph ? '<div class="thumb photo"><img loading="lazy" src="' + ph + '"' + dimAttr(ph) + ' alt="Painted plate of ' + esc(sp[1]) + '"></div>' : pid ? '<div class="thumb">' + art(sp[1], pid) + '</div>' : '') + '<div class="head">' + (tn ? '<img class="tn" loading="lazy" src="' + tn.thumb + '" width="' + tn.width + '" height="' + tn.height + '" alt="Photo of ' + esc(sp[1]) + '">' : '') + '<div><div class="nm">' + wikiName(sp) + '</div><div class="sci">' + esc(sp[2]) + '</div></div></div>' +
         '<div class="meta">' + tags + '</div><div class="note">' + esc(sp[5]) + '</div><div class="zs">' + zs + '</div>' + (tn ? '<div class="cr">Photo: <a href="' + tn.file_page + '" target="_blank" rel="noopener noreferrer">' + esc(tn.artist || "Unknown") + '</a> · ' + (tn.license_url ? '<a href="' + tn.license_url + '" target="_blank" rel="noopener noreferrer">' + esc(tn.license) + '</a>' : esc(tn.license)) + (tn.note ? '<br>' + esc(tn.note) : '') + '</div>' : '') + '</article>';
     });
     html += "</div></div>";
@@ -889,14 +912,14 @@ const NUM = Object.fromEntries(PLATES.map(([name], i) => [name, roman(i + 1)]));
 const captionOf = (name, sp) => {
   const tags = sp[3].split(",").map(t => '<span class="tag t-' + t + '">' + SLABEL[t] + '</span>').join("");
   const zs = sp[4].split("").map(z => ZNAME[z]).join(" · ");
-  return '<span class="pn">Plate ' + NUM[name] + '</span><span class="cn">' + wikiName(sp) + '</span><span class="sn">' + esc(sp[2]) + '</span>' +
+  return '<span class="pn">Plate ' + NUM[name] + '</span><span class="cn"><a class="jl" href="#e-' + slug(name) + '" data-jump="' + esc(name) + '">' + esc(name) + '</a></span><span class="sn">' + esc(sp[2]) + '</span>' +
     '<span class="meta">' + tags + '</span><span class="zs">' + zs + '</span>';
 };
 
 $("painted").innerHTML = Object.entries(PAINTED).sort((a, b) => PLATES.findIndex(p => p[0] === a[0]) - PLATES.findIndex(p => p[0] === b[0])).map(([name, src]) => {
   const sp = S.find(x => x[1] === name);
   const wide = WIDE.has(name) ? " wide" : "";
-  return '<figure class="pp' + wide + '"><img loading="lazy" src="' + src + '" alt="Painted plate of ' + esc(name) + '">' + captionOf(name, sp) + '</figure>';
+  return '<figure class="pp' + wide + '"><a class="pimg" href="#e-' + slug(name) + '" data-jump="' + esc(name) + '" aria-label="' + esc(name) + ': go to guide entry"><img loading="lazy" src="' + src + '"' + dimAttr(src) + ' alt="Painted plate of ' + esc(name) + '"></a>' + captionOf(name, sp) + '</figure>';
 }).join("");
 
 // Hide the sketch section once every species has a painted plate
@@ -908,4 +931,59 @@ $("plates").innerHTML = SKETCHES.map(([name, id]) => {
 
 $("q").addEventListener("input", e => { state.q = e.target.value.trim().toLowerCase(); render(); });
 render();
+
+// Sticky filter bar height, so a jumped-to card isn't hidden under it
+const controls = document.querySelector(".controls");
+const setControlsH = () => document.documentElement.style.setProperty("--controls-h", (controls.offsetHeight + 12) + "px");
+setControlsH(); addEventListener("resize", setControlsH);
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const guide = $("guide");
+
+// Scroll so el's top sits at `offset` px. Images loading above can shift the page
+// mid-scroll, so keep correcting until the position holds.
+function scrollToEl(el, offset){
+  const target = () => el.getBoundingClientRect().top + scrollY - offset;
+  scrollTo({top: target(), behavior: reduce ? "auto" : "smooth"});
+  let last = -1, tries = 0;
+  const settle = setInterval(() => {
+    const moving = Math.abs(scrollY - last) > 1; last = scrollY;
+    tries++;
+    if (moving && tries < 25) return;
+    const off = el.getBoundingClientRect().top - offset;
+    if (Math.abs(off) > 3) scrollTo({top: target(), behavior: "auto"});
+    else if (!moving || tries > 40) clearInterval(settle);
+    if (tries > 40) clearInterval(settle);
+  }, 120);
+}
+
+// Plate image or name -> clear filters, scroll to that entry's card, flash it
+function jumpTo(name){
+  state.group = null; state.status = null; state.q = ""; $("q").value = "";
+  render();
+  const card = $("e-" + slug(name));
+  if (!card) return;
+  scrollToEl(card, controls.offsetHeight + 12);
+  card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
+  card.querySelector(".nm a")?.focus({preventScroll: true});
+}
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-jump]");
+  if (!a) return;
+  e.preventDefault();
+  jumpTo(a.dataset.jump);
+});
+
+// Banner: shown after the page title scrolls off, hidden again once the guide is reached
+const jump = $("jump"), jumpBtn = jump.querySelector("button"), title = document.querySelector("header h1");
+function updateJump(){
+  const show = title.getBoundingClientRect().bottom < 0 && guide.getBoundingClientRect().top > 60;
+  jump.classList.toggle("show", show);
+  jump.setAttribute("aria-hidden", String(!show));
+  jumpBtn.tabIndex = show ? 0 : -1;
+}
+let ticking = false;
+addEventListener("scroll", () => { if (!ticking){ ticking = true; requestAnimationFrame(() => { updateJump(); ticking = false; }); } }, {passive: true});
+updateJump();
+jumpBtn.addEventListener("click", () => scrollToEl(guide, 0));
 </script>
