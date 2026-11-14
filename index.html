@@ -97,6 +97,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .row .lbl{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);width:4.2rem}
 .chip{font:inherit;font-size:.86rem;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 11px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.filters{display:flex;flex-direction:column;gap:12px}
+.filters[hidden]{display:none}
+.ftog{font:inherit;font-size:.86rem;font-weight:500;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.ftog #fcount:not(:empty){background:var(--accent);color:var(--accent-ink);border-radius:999px;font-size:.72rem;padding:0 7px;line-height:1.5}
+.ftog .chev{font-size:.75em;color:var(--muted);transition:transform .15s}
+.ftog[aria-expanded="true"] .chev{transform:rotate(180deg)}
 #q{font:inherit;flex:1 1 220px;min-width:0;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 12px}
 #count{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
 
@@ -173,6 +179,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* Tighter captions in the narrow phone columns */
 @media (max-width:699px){.pp{padding:6px 6px 8px;gap:5px}.pp .cn{font-size:.95rem}.pp .sn{font-size:.78rem}.pp .pn{font-size:.62rem;letter-spacing:.1em}.pp .meta .tag{font-size:.6rem}.pp .zs{font-size:.62rem}}
 .sp .head{display:flex;gap:12px;align-items:flex-start}
+.sp .head .meta{margin-top:4px}
 .sp .tn{flex:0 0 72px;width:72px;height:72px;object-fit:contain;background:var(--bg);border-radius:4px}
 .sp .cr{font-size:.72rem;color:var(--muted);overflow-wrap:anywhere}
 .sp .cr a{color:inherit}
@@ -575,8 +582,13 @@ footer li{break-inside:avoid;margin-bottom:4px}
       <input id="q" type="search" placeholder="Search by name, e.g. kokanee or Pinus" aria-label="Search species">
       <span id="count" aria-live="polite"></span>
     </div>
-    <div class="row" id="groups"><span class="lbl">Group</span></div>
-    <div class="row" id="statuses"><span class="lbl">Status</span></div>
+    <div class="row">
+      <button class="ftog" id="ftog" type="button" aria-expanded="false" aria-controls="filters">Filters <span id="fcount"></span><span class="chev" aria-hidden="true">▾</span></button>
+    </div>
+    <div class="filters" id="filters" hidden>
+      <div class="row" id="groups"><span class="lbl">Group</span></div>
+      <div class="row" id="statuses"><span class="lbl">Status</span></div>
+    </div>
   </div>
   <div class="legend" style="margin-block:16px 24px">
     <span><i class="tag t-native">Native</i> occurs here naturally</span>
@@ -903,8 +915,8 @@ function render(){
       const pid = PLATE_OF[sp[1]], ph = PAINTED[sp[1]];
       // Commons thumbnail only for entries without a painted plate
       const tn = ph ? null : THUMBS[WIKI[sp[1]] || sp[2]];
-      html += '<article class="sp" id="e-' + slug(sp[1]) + '">' + (ph ? '<div class="thumb photo"><img loading="lazy" src="' + ph + '"' + dimAttr(ph) + ' alt="Painted plate of ' + esc(sp[1]) + '"></div>' : pid ? '<div class="thumb">' + art(sp[1], pid) + '</div>' : '') + '<div class="head">' + (tn ? '<img class="tn" loading="lazy" src="' + tn.thumb + '" width="' + tn.width + '" height="' + tn.height + '" alt="Photo of ' + esc(sp[1]) + '">' : '') + '<div><div class="nm">' + wikiName(sp) + '</div><div class="sci">' + esc(sp[2]) + '</div></div></div>' +
-        '<div class="meta">' + tags + '</div><div class="note">' + esc(sp[5]) + '</div><div class="zs">' + zs + '</div>' + (tn ? '<div class="cr">Photo: <a href="' + tn.file_page + '" target="_blank" rel="noopener noreferrer">' + esc(tn.artist || "Unknown") + '</a> · ' + (tn.license_url ? '<a href="' + tn.license_url + '" target="_blank" rel="noopener noreferrer">' + esc(tn.license) + '</a>' : esc(tn.license)) + (tn.note ? '<br>' + esc(tn.note) : '') + '</div>' : '') + '</article>';
+      html += '<article class="sp" id="e-' + slug(sp[1]) + '">' + (ph ? '<div class="thumb photo"><img loading="lazy" src="' + ph + '"' + dimAttr(ph) + ' alt="Painted plate of ' + esc(sp[1]) + '"></div>' : pid ? '<div class="thumb">' + art(sp[1], pid) + '</div>' : '') + '<div class="head">' + (tn ? '<img class="tn" loading="lazy" src="' + tn.thumb + '" width="' + tn.width + '" height="' + tn.height + '" alt="Photo of ' + esc(sp[1]) + '">' : '') + '<div><div class="nm">' + wikiName(sp) + '</div><div class="sci">' + esc(sp[2]) + '</div><div class="meta">' + tags + '</div></div></div>' +
+        '<div class="note">' + esc(sp[5]) + '</div><div class="zs">' + zs + '</div>' + (tn ? '<div class="cr">Photo: <a href="' + tn.file_page + '" target="_blank" rel="noopener noreferrer">' + esc(tn.artist || "Unknown") + '</a> · ' + (tn.license_url ? '<a href="' + tn.license_url + '" target="_blank" rel="noopener noreferrer">' + esc(tn.license) + '</a>' : esc(tn.license)) + (tn.note ? '<br>' + esc(tn.note) : '') + '</div>' : '') + '</article>';
     });
     html += "</div></div>";
   });
@@ -912,6 +924,10 @@ function render(){
   $("count").textContent = shown.length + " of " + S.length + " entries";
   document.querySelectorAll("#groups .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.g === String(state.group))));
   document.querySelectorAll("#statuses .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.s === String(state.status))));
+  // Number of active group/status filters, shown on the Filters button while collapsed or open
+  const active = (state.group !== null) + (state.status !== null);
+  $("fcount").textContent = active ? String(active) : "";
+  $("ftog").setAttribute("aria-label", "Filters" + (active ? ", " + active + " active" : ""));
 }
 
 
@@ -957,6 +973,14 @@ render();
 const controls = document.querySelector(".controls");
 const setControlsH = () => document.documentElement.style.setProperty("--controls-h", (controls.offsetHeight + 12) + "px");
 setControlsH(); addEventListener("resize", setControlsH);
+
+// Filters button: show or hide the Group and Status rows
+$("ftog").addEventListener("click", () => {
+  const open = $("filters").hidden;
+  $("filters").hidden = !open;
+  $("ftog").setAttribute("aria-expanded", String(open));
+  setControlsH();
+});
 
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const guide = $("guide");
