@@ -2,13 +2,13 @@
 
 [![Tahoe Basin Field Guide flyer](flyer/flyer-preview.jpg)](flyer/Tahoe-Basin-Field-Guide-flyer.pdf)
 
-**[Open the guide](https://jonoisart.github.io/tahoe-field-guide/)** · **[Download the printable flyer (PDF, US Letter)](flyer/Tahoe-Basin-Field-Guide-flyer.pdf)**
+**[Open the guide](https://research.jonoisart.com/tahoe-field-guide/)** · **[Download the printable flyer (PDF, US Letter)](flyer/Tahoe-Basin-Field-Guide-flyer.pdf)**
 
 A searchable field guide to 143 plants and animals of Lake Tahoe and its watershed, from the lake floor (4,580 ft) to Freel Peak (10,881 ft). Each entry gives its habitat zone, status (native, endemic, protected, introduced, invasive), a short natural-history note, a Wikipedia link and an image.
 
 A one-page printable flyer with a QR code lives in `flyer/`.
 
-Planned home: **jonoisart.com/tahoe-field-guide**
+Live at **[research.jonoisart.com/tahoe-field-guide](https://research.jonoisart.com/tahoe-field-guide/)**. The flyer's QR code points to `jonoisart.com/tahoe-field-guide`, which redirects there.
 
 ## Layout
 
@@ -40,7 +40,7 @@ python3 flyer/build.py   # writes flyer/flyer.html; print it to PDF at 8.5x11 in
 
 ## Hosting
 
-Any static host works. Point the host's root at this repo (GitHub Pages: Settings → Pages → deploy from `main`, root; Cloudflare Pages: no build command, output directory `/`).
+The live site is built by the [research hub](https://github.com/jonoisart/research), which pulls this repo's `main` and deploys it to Cloudflare at `/tahoe-field-guide/`. Any other static host also works: point its root at this repo, no build step.
 
 ## Credits and licensing
 
